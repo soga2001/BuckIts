@@ -58,8 +58,8 @@ export default defineComponent({
                     <span class="text-gray-100 text-lg">@{{ username }}</span>
                 </div>
                 <div class="flex flex-row gap-2">
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Follow</button>
-                    <button class="bg-gray-500 text-white px-4 py-2 rounded-md">Message</button>
+                    <Button class="btn" label="Follow" icon="pi pi-user-plus" />
+                    <Button class="btn-secondary"  label="Message" icon="pi pi-comment" />
                 </div>
                 <div>
                     <p class="text-lg text-gray-300">{{ userProfile.bio }}</p>
@@ -73,3 +73,6 @@ export default defineComponent({
         <slot />
     </div>
 </template>
+
+<style lang="scss">
+</style>

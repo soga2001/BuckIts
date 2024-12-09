@@ -1,0 +1,32 @@
+@use "variables" as *;
+@import 'primeicons/primeicons.css';
+@import 'material-icons/iconfont/material-icons.css';
+
+// .p-button {
+//     padding: 10px 20px;
+//     background-color: $primary-color;
+//     border: none !important;
+//     color: white !important;
+// }
+
+.btn {
+    background-color: transparent !important;
+    color: white !important;
+    border-color: $primary-color !important;
+
+    &:hover {
+        background-color: rgba(255, 0, 255, .3) !important;
+        color: white !important;
+    }
+}
+
+.btn-secondary {
+    background-color: transparent !important;
+    border-color: white !important;
+    color: white !important;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, .3) !important;
+        color: white !important;
+    }
+}

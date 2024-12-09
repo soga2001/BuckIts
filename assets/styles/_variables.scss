@@ -1,0 +1,19 @@
+@use "sass:color";
+
+$primary-color: rgb(255, 0, 255);
+$primary-color-light: color.scale($primary-color, $lightness:20%);
+$primary-color-dark: color.scale($primary-color, $lightness:-20%);
+$primary-color-hover: color.scale($primary-color, $lightness:10%);
+$primary-color-active: color.scale($primary-color, $lightness:-10%);
+$primary-color-focus: color.scale($primary-color, $lightness:-10%);
+$primary-color-disabled: color.scale($primary-color, $lightness:40%);
+$primary-color-rgb: 255, 0, 255;
+
+$secondary-color: rgb(0, 255, 255);
+$secondary-color-light: color.scale($secondary-color, $lightness:20%);
+$secondary-color-dark: color.scale($secondary-color, $lightness:-20%);   
+$secondary-color-hover: color.scale($secondary-color, $lightness:10%);
+$secondary-color-active: color.scale($secondary-color, $lightness:-10%);
+$secondary-color-focus: color.scale($secondary-color, $lightness:-10%);
+$secondary-color-disabled: color.scale($secondary-color, $lightness:40%);
+$secondary-color-rgb: 0, 255, 255;
