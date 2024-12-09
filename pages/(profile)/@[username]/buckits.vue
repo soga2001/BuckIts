@@ -2,7 +2,6 @@
 import { defineComponent } from 'vue'
 
 definePageMeta({
-    title: 'Home',
     alias: ['/@:username'],
 })
 
@@ -18,6 +17,11 @@ export default defineComponent({
         return {
 
         }
+    },
+    mounted() {
+        useHead({
+            title: `Buckits`,
+        })
     }
 })
 </script>

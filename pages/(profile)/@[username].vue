@@ -4,10 +4,6 @@ export default defineComponent({
         return {
         }
     },
-    setup() {
-        const route = useRoute();
-        return {route};
-    },
 })
 
 </script>
@@ -15,7 +11,7 @@ export default defineComponent({
 <template>
     <div>
         <NuxtLayout name="profile">
-            <NuxtPage :username="route.params.username"/>
+            <NuxtPage :username="$route.params.username"/>
         </NuxtLayout>
     </div>
 </template>
