@@ -2,6 +2,11 @@
 @import 'primeicons/primeicons.css';
 @import 'material-icons/iconfont/material-icons.css';
 
+
+.bg-primary {
+    background-color: $primary-color !important;
+}
+
 .btn {
     background-color: transparent !important;
     color: white !important;
@@ -55,4 +60,72 @@
 
 .p-tablist-active-bar {
     background-color: $primary-color !important;
+}
+
+
+
+
+.p-inputgroup{
+    border: 1px solid white;
+    width: 100%;
+    
+    &:has(.p-inputgroupaddon) input,
+    &:has(.p-inputgroupaddon) .p-inputmask .p-inputtext {
+        padding-left: 0px !important;
+    }
+
+    .p-password, .p-password.p-inputwrapper, .p-inputmask {
+        width: 100%;
+    }
+
+    input, .p-inputmask .p-inputtext {
+        border: none !important;
+        width: 100%;
+        padding-left: 10px !important;
+        background-color: transparent !important;
+
+
+        &:focus {
+            border: none !important; 
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        &:active {
+            outline: none !important;
+        }
+    }
+
+    .p-inputgroupaddon {
+        background-color: transparent !important;
+        border: none !important;
+    }
+
+    &:focus-within {
+        border: 1px solid $primary-color;
+
+        .p-inputgroupaddon {
+             * {
+                color: $primary-color;
+             }
+        }
+
+        // .toggle_mask {
+        //     color: $primary-color-text;
+        // }
+    }
+}
+
+.p-password-mask-icon {
+    z-index: 100 !important;
+}
+
+.p-inputotp {
+    input {
+
+        &:focus {
+            border: 1px solid $primary-color !important;
+            outline: none;
+        }
+    }
 }

@@ -1,11 +1,10 @@
 <script lang="ts">
-import type { RefSymbol } from '@vue/reactivity';
-import type { UserProfileInterface } from '~/assets/interface/userProfile';
+import type { UserMetaData } from '~/assets/interface/user';
 
 export default defineComponent({
     data() {
         return {
-            userProfile: {} as UserProfileInterface,
+            userProfile: {} as UserMetaData,
             error: false,
             loading: true,
             username: this.$route.params.username,
@@ -21,7 +20,7 @@ export default defineComponent({
             const { data } = await useFetch(`/api/profile/${this.$route.params.username}`);
             const {status, user} = data.value;
             if (status === 200) {
-                this.userProfile = user as UserProfileInterface;
+                this.userProfile = user as UserMetaData;
                 this.error = false;
             }   
             else {
