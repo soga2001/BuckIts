@@ -2,13 +2,6 @@
 @import 'primeicons/primeicons.css';
 @import 'material-icons/iconfont/material-icons.css';
 
-// .p-button {
-//     padding: 10px 20px;
-//     background-color: $primary-color;
-//     border: none !important;
-//     color: white !important;
-// }
-
 .btn {
     background-color: transparent !important;
     color: white !important;
@@ -29,4 +22,37 @@
         background-color: rgba(255, 255, 255, .3) !important;
         color: white !important;
     }
+}
+
+
+.p-tab {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.p-tablist-tab-list {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center !important;
+    width: 100%;
+    background-color: $primary-background-color-light !important;
+
+    button {
+        flex-grow: 1;
+        padding: 15px 0 !important;
+        
+        a {
+            display: flex !important;
+            justify-content: center !important;
+        }
+    }
+}
+
+.p-tab-active {
+    color: $primary-color-text !important;
+    border-color: $primary-color !important;
+}
+
+.p-tablist-active-bar {
+    background-color: $primary-color !important;
 }

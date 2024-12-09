@@ -17,3 +17,11 @@ $secondary-color-active: color.scale($secondary-color, $lightness:-10%);
 $secondary-color-focus: color.scale($secondary-color, $lightness:-10%);
 $secondary-color-disabled: color.scale($secondary-color, $lightness:40%);
 $secondary-color-rgb: 0, 255, 255;
+
+$primary-background-color: rgb(0, 0, 0);
+$primary-background-color-light: color.scale($primary-background-color, $lightness:15%);
+$primary-background-color-lighter: color.scale($primary-background-color, $lightness:30%);
+$primary-background-color-dark: color.scale($primary-background-color, $lightness:-20%);
+$primary-background-color-hover: color.scale($primary-background-color, $lightness:10%);
+
+$primary-color-text: white;
