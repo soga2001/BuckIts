@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { RefSymbol } from '@vue/reactivity';
 import type { UserProfileInterface } from '~/assets/interface/userProfile';
 
 export default defineComponent({
@@ -8,6 +9,11 @@ export default defineComponent({
             error: false,
             loading: true,
             username: this.$route.params.username,
+            items: ref([
+                { route: `/@${this.$route.params.username}`, label: 'Buckits', icon: 'checklist' },
+                { route: `/@${this.$route.params.username}/media`, label: 'Media', icon: 'image' },
+            ]),
+            path: this.$route.path,
         }
     },
     methods: {
@@ -47,9 +53,10 @@ export default defineComponent({
 
 <template>
     <div class="h-96 w-full">
-        <div v-if="!error" class="px-40 py-10 flex flex-row gap-20 h-full">
-            <div class="flex grow-0">
-                <img :src="userProfile.avatar" class="w-48 h-48 rounded-full bg-red-50" />
+        <div v-if="!error" class="px-20 py-10 flex flex-row gap-20 h-full">
+            <div class="flex grow-0 justify-center w-80 h-fit rounded-full overflow-hidden">
+                <!-- <img :src="userProfile.avatar" class="w-48 h-48 rounded-full bg-red-50" /> -->
+                <Image src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" preview/>
             </div>
             <div class="flex flex-col grow w-full gap-2">
                 <div class="text-3xl flex flex-row items-center gap-2 h-fit">
@@ -69,10 +76,24 @@ export default defineComponent({
         </div>
         
     </div>
+    <Tabs :value="path">
+            <TabList>
+                <Tab class="" v-for="tab in items" :key="tab.label" :value="tab.route">
+                    <router-link class="grow" v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
+                        <a v-ripple :href="href" @click="navigate" class="flex items-center gap-2 text-inherit">
+                            <!-- <i :class="tab.icon" /> -->
+                            <i class="material-icons">{{ tab.icon }}</i>
+                            <span>{{ tab.label }}</span>
+                        </a>
+                    </router-link>
+                </Tab>
+            </TabList>
+        </Tabs>
     <div>
         <slot />
     </div>
 </template>
 
 <style lang="scss">
+
 </style>
