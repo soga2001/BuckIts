@@ -5,12 +5,12 @@ export default defineEventHandler(async (event) => {
     const client = await serverSupabaseClient(event)
 
   const { data: user, error } = await client.from('profiles').select('*').eq('username', username).single()
-    if (error) {
-        return {
-            status: 500,
-            user: null
-        }
-    }  
+  if (error) {
+      return {
+          status: 500,
+          user: null
+      }
+  }  
   return {
     status: 200,
     user: user

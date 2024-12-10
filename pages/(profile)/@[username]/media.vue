@@ -1,6 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+definePageMeta({
+    name: "profile-media",
+})
 
 export default defineComponent({
     props: {
@@ -13,6 +16,11 @@ export default defineComponent({
         return {
 
         }
+    },
+    mounted() {
+        useHead({
+            title: `Media`,
+        })
     }
 })
 </script>

@@ -2,11 +2,10 @@
 import { defineComponent } from 'vue'
 
 definePageMeta({
-    alias: ['/@:username'],
+    name: "profile-buckits",
 })
 
 export default defineComponent({
-    name: 'Buckits',
     props: {
         username: {
             type: String,

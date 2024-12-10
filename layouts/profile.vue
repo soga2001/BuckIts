@@ -53,10 +53,8 @@ export default defineComponent({
 <template>
     <div class="h-96 w-full">
         <div v-if="!error" class="px-20 py-10 flex flex-row gap-20 h-full">
-            <div class="flex grow-0 justify-center w-80 h-fit rounded-full overflow-hidden">
                 <!-- <img :src="userProfile.avatar" class="w-48 h-48 rounded-full bg-red-50" /> -->
-                <Image src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" preview/>
-            </div>
+            <Image src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" preview/>
             <div class="flex flex-col grow w-full gap-2">
                 <div class="text-3xl flex flex-row items-center gap-2 h-fit">
                     <span v-if="userProfile">{{ userProfile.full_name }}</span>
