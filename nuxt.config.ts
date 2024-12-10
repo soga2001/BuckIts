@@ -4,15 +4,20 @@ import Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  app: {
+    keepalive: true,
+  },
   modules: [
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
+    '@pinia/nuxt'
   ],
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
+          api: 'modern', // or "modern"
           additionalData: '@use "~/assets/styles/_variables.scss" as *;'
         }
       }

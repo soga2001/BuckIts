@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 
 // import { IonIcon } from '@ionic/vue';
 // import type {User} from '@/assets/interface/user.ts'
-// import {useStore} from '@/stores/store'
+import {useStore} from '@/stores/stores'
 import type { User } from '~/assets/interface/user';
 
 
@@ -25,9 +25,8 @@ export default defineComponent({
     }
   },
   setup() {
-    // const store = useStore()
-    // const supabase = useSupabaseClient()
-    // return {store, supabase}
+    const store = useStore()
+    return {store}
   },
   methods: {
     async login() {        
@@ -42,7 +41,9 @@ export default defineComponent({
         if (response.error) {
             this.error = response.error
         } else {
-            console.log(response.data.user)
+            this.store.setUser(response.data.user)
+            this.store.changeAuthenticated(true)
+            this.$router.push('/')
         }
     }
   },
@@ -53,16 +54,8 @@ export default defineComponent({
     <div class="main bg-green">
         <form class="form flex flex-col gap-3" ref="loginForm" @submit.prevent="login">
             <div class="text-3xl font-semibold">
-                <h1>Login to your Buck<span class="bg-primary rounded-sm px-2 ml-1">It</span> account</h1>
+                <h1>Login to your Buck<span class="font-black">IT</span> account</h1>
             </div>
-            <!-- <div class="flex-column">
-            <label>Email </label>
-            </div>
-
-            <ion-input placeholder="Enter your email" fill="outline" v-model="email" :clear-input="true">
-            <ion-icon slot="start" :icon="ioniconsAtSharp" aria-hidden="true"></ion-icon>
-            </ion-input> -->
-
             <div class="flex flex-col gap-3">
               <div class="flex-column">
                 <label>Email</label>
@@ -86,11 +79,7 @@ export default defineComponent({
                 <InputGroupAddon class="input-addon">
                     <span class="material-icons">password</span>
                 </InputGroupAddon>
-                <InputText :type="togglePassword ? 'password' : 'text'" class="input" v-model="password" placeholder="Enter your password"/>
-                <!-- <Password v-model="password"/> -->
-                <!-- <InputGroupAddon class="border-none" v-if="password !== ''">
-                    <i class="material-icons" @click="togglePassword = !togglePassword">{{ togglePassword ? "visibility" : "visibility_off" }}</i>
-                </InputGroupAddon> -->
+                <Password v-model="password" :feedback="false" toggle-mask placeholder="Enter your password"/>
               </InputGroup>
             </div>
             
@@ -103,11 +92,9 @@ export default defineComponent({
             <div class="flex justify-center">
               <input :disabled="email == '' && password == ''"class="btn text-md font-bold" type="submit" value="Sign In"/>
             </div>
-            <p class="flex justify-center gap-2 items-center">
+            <p class="flex justify-center items-center">
                 Don't have an account? 
-                <span class="span">
-                    <Button class="btn-secondary" href="/register">Sign Up</Button>
-                </span>
+                <Button as="router-link" class="!bg-transparent text-primary !border-none hover:underline" to="/register">Sign up</Button>
             </p>
 
             <div class="separator p-5">
@@ -201,19 +188,6 @@ export default defineComponent({
   cursor: pointer;
 }
 
-// .btn:hover {
-//   border-color: var(--ion-color-primary);
-//   color: var(--ion-color-primary);
-
-//   & > ion-icon {
-//     color: var(--ion-color-primary);
-//   }
-// }
-
-
-ion-icon {
-  font-size: 1.5rem;
-}
 
 .separator {
   width: 100%;
