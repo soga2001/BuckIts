@@ -2,19 +2,19 @@
 
 import { usePrimeVue } from 'primevue/config';
 import type { FileUploadSelectEvent, FileUploadRemoveEvent } from 'primevue/fileupload';
-import type { User } from '~/assets/interface/user';
+import type { User, UserMetaData } from '~/assets/interface/user';
 import { useStore } from '~/stores/stores';
 
 export default defineComponent({
     props: {
-        username: {
-            type: String,
-            required: true
-        },
-        userId: {
-            type: String,
-            required: true
-        }
+        // username: {
+        //     type: String,
+        //     required: true
+        // },
+        // userId: {
+        //     type: String,
+        //     required: true
+        // }
     },
     data() {
         return {
@@ -43,30 +43,36 @@ export default defineComponent({
             if(this.file == null) {
                 return null;
             }
-            try {
-                const { error } = await this.supabase.storage.from('avatars').upload(`${this.user.id}/avatar`, this.file)
-            } catch (e) {
-                const {error } = await this.supabase.storage.from('avatars').update(`${this.user.id}/avatar`, this.file, {
-                    upsert: true
-                })
-                if(error) {
-                    return null;
-                }
 
-            }
-            
-            await this.getPublicURL()
-        },
-        async updateProfile() {
+            const formData = new FormData();
+            formData.append('file', this.file as Blob);
 
-            // const {data, error } = await this.supabase.from('profiles').update({id: this.user.id, avatar_url: this.url as string } as never).eq('id', this.user.id).select()
-            
-            const {data, error } = await this.supabase.auth.updateUser({
-                data: { avatar_url: this.url as string }
+            const {url, error } = await $fetch('/api/uploadAvatar', {
+                method: 'POST',
+                body: formData
             })
 
+            if (url) {
+                this.url = url
+                this.updateProfile()
+            }
+        },
+        async updateProfile() {
+            
+            const userProfile = {
+                avatar_url: this.url as string
+            }
+
+            const {user, error} = await $fetch('/api/profile/update', {
+                method: 'POST',
+                contentType: 'application/json',
+                body: userProfile
+            })
+
+
             if(!error) {
-                this.store.setUser((data as unknown) as User)
+                console.log(user)
+                this.store.setUser(user as User)
             }
         },
         fileChange(e: FileUploadSelectEvent) {

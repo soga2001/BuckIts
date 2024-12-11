@@ -1,6 +1,6 @@
 // store/filters.ts
 import { defineStore } from 'pinia'
-import type { User } from '~/assets/interface/user';
+import type { User, UserMetaData } from '~/assets/interface/user';
 
 export const useStore = defineStore({
   id: 'auth-store',
@@ -18,6 +18,10 @@ export const useStore = defineStore({
     setUser(value: User) {
         this.user = value
     },
+    setUserMetaData(value: UserMetaData) {
+        this.user.user_metadata = value
+
+    },
     removeUser() {
         this.user = {} as User
     },
@@ -28,6 +32,7 @@ export const useStore = defineStore({
   getters: {
     isAuthenticated: (state) => state.authenticated,
     getUser: (state) => state.user,
+    getUserMetaData: (state) => state.user.user_metadata,
     isDesktop: (state) => state.desktop
   },
 })

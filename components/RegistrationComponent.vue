@@ -114,7 +114,7 @@ export default defineComponent({
           email: this.email,
           password: this.password,
           confirmPassword: this.confirmPassword,
-          fullname: this.fullname,
+          full_name: this.fullname,
           phone: this.unmaskedPhone,
           dob: this.dob,
           month: this.month,

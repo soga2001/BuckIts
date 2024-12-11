@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
     const client = await serverSupabaseClient(event)
     // read body
     const body = await readBody(event)
-    const { email, password, phone, fullname, username, bio, dob } = body
+    const { email, password, phone, full_name, username, bio, dob } = body
 
     return await client.auth.signUp(
         {
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
           phone: phone,
           options: {
             data: {
-              fullname: fullname,
+              full_name: full_name,
               username: username,
               bio: bio,
               dob: dob,
