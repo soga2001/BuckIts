@@ -1,10 +1,28 @@
 @use "variables" as *;
-@import 'primeicons/primeicons.css';
-@import 'material-icons/iconfont/material-icons.css';
+@use 'primeicons/primeicons.css';
+@use 'material-icons/iconfont/material-icons.css';
 
 
 .bg-primary {
     background-color: $primary-color !important;
+}
+
+.bg {
+    background-color: #18181b !important;
+}
+
+.text-primary {
+    color: $primary-color-text !important;
+}
+
+.border-primary {
+    border-color: $primary-color !important;
+}
+
+.active-link {
+    color: $primary-color-text !important;
+    font-weight: 900;
+    background-color: $primary-background-color-light;
 }
 
 .btn {
@@ -64,12 +82,20 @@
 
 
 
+.p-textarea {
+    padding: 10px !important;
+    border: 1px solid $primary-color-text !important;
+
+    &:focus-within {
+        border: 1px solid $primary-color !important;
+    }
+}
 
 .p-inputgroup{
-    border: 1px solid white;
+    border: 1px solid $primary-color-text;
     width: 100%;
     
-    &:has(.p-inputgroupaddon) input,
+    &:has(.p-inputgroupaddon) .p-inputtext,
     &:has(.p-inputgroupaddon) .p-inputmask .p-inputtext {
         padding-left: 0px !important;
     }
@@ -78,7 +104,7 @@
         width: 100%;
     }
 
-    input, .p-inputmask .p-inputtext {
+    input, .p-inputmask, .p-inputtext {
         border: none !important;
         width: 100%;
         padding-left: 10px !important;
@@ -109,10 +135,6 @@
                 color: $primary-color;
              }
         }
-
-        // .toggle_mask {
-        //     color: $primary-color-text;
-        // }
     }
 }
 
@@ -128,4 +150,16 @@
             outline: none;
         }
     }
+}
+
+.p-select {
+    border: 1px solid $primary-color-text !important;
+
+    &:focus-within {
+        border: 1px solid $primary-color !important;
+    }
+}
+
+.p-select-option-selected {
+    background-color: $primary-background-color-lighter !important;
 }
