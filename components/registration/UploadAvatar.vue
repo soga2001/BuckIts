@@ -71,7 +71,6 @@ export default defineComponent({
 
 
             if(!error) {
-                console.log(user)
                 this.store.setUser(user as User)
             }
         },

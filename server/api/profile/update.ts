@@ -22,8 +22,6 @@ export default defineEventHandler(async (event) => {
       data: body
   })
 
-  console.log(user)
-
   if (error) {
       return {
         error: err,

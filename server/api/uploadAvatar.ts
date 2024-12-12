@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
     // Append the data to a new FormData (need to convert Buffer into string / Blob)
     formDataBody?.forEach((value) => {
         if (value.name && value.data) {
-            console.log(value.name, value.data)
             if (value.name === 'file') {
                 const blob = new Blob([value.data], { type: value.type });
                 formData.append(value.name, blob)
@@ -40,7 +39,6 @@ export default defineEventHandler(async (event) => {
     }
 
     const fileDirectory = `${user.id}/avatar`
-    console.log(fileDirectory)
 
     // // // Upload avatar
     try {
@@ -60,7 +58,6 @@ export default defineEventHandler(async (event) => {
 
     // // Get Public URL
     const { data } = await client.storage.from('avatars').getPublicUrl(fileDirectory);
-    console.log(data)
     const url = data.publicUrl
 
     return {
