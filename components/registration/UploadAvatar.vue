@@ -2,26 +2,17 @@
 
 import { usePrimeVue } from 'primevue/config';
 import type { FileUploadSelectEvent, FileUploadRemoveEvent } from 'primevue/fileupload';
-import type { User, UserMetaData } from '~/assets/interface/user';
+import type { User } from '~/assets/interface/user';
 import { useStore } from '~/stores/stores';
 
 export default defineComponent({
-    props: {
-        // username: {
-        //     type: String,
-        //     required: true
-        // },
-        // userId: {
-        //     type: String,
-        //     required: true
-        // }
-    },
     data() {
         return {
             file: null as File | null,
             imgURL: '',
             url: "",
             disabled: false,
+            loading: false,
         }
     },
     setup() {
@@ -39,18 +30,23 @@ export default defineComponent({
             this.updateProfile()
         },
         async uploadAvatar() {
-
             if(this.file == null) {
                 return null;
             }
-
+            this.loading = true
             const formData = new FormData();
             formData.append('file', this.file as Blob);
 
-            const {url, error } = await $fetch('/api/uploadAvatar', {
+            const {url, error} = await $fetch<{
+                url: string,
+                error: never
+            }>('/api/uploadAvatar', {
                 method: 'POST',
                 body: formData
             })
+            if (error) {
+               this.loading = false
+            }
 
             if (url) {
                 this.url = url
@@ -58,7 +54,6 @@ export default defineComponent({
             }
         },
         async updateProfile() {
-            
             const userProfile = {
                 avatar_url: this.url as string
             }
@@ -112,10 +107,9 @@ export default defineComponent({
             <template #header="{ chooseCallback }">
             <div class="flex flex-wrap justify-between items-center flex-1 gap-4">
                 <div class="flex gap-2">
-                    <!-- <ion-button :disabled="disabled"  @click="chooseCallback()" shape="round" class="avatar-upload">
-                        <ion-icon slot="icon-only" :icon="ioniconsImageOutline"></ion-icon>
-                    </ion-button> -->
-                    <button :disabled="disabled" @click="chooseCallback()" class="avatar-upload material-icons">upload</button>
+                    <Button rounded :disabled="disabled" @click="chooseCallback()" class="avatar-upload !p-2 !bg-transparent btn-secondary !text-white">
+                        <i class="material-icons">upload</i>
+                    </Button>
                 </div>
             </div>
             </template>  
@@ -141,10 +135,10 @@ export default defineComponent({
                         >
                         <div>{{ formatSize(file.size) }}</div>
 
-                        <!-- <ion-button class="delete_button" shape="round" @click="removeUploadedFileCallback(0)">
-                        <ion-icon slot="icon-only" :ios="ioniconsClose" :md="ioniconsCloseOutline"></ion-icon>
-                        </ion-button> -->
-                        <button class="delete_button material-icons text-red-500" @click="removeUploadedFileCallback(0)">delete</button>
+                        <!-- <button  class="delete_button material-icons text-red-500" @click="removeUploadedFileCallback(0)">delete</button> -->
+                        <Button rounded :disabled="disabled" @click="removeUploadedFileCallback(0)" severity="danger" class="!p-2">
+                            <i class="material-icons">delete</i>
+                        </Button>
                     </div>
                     </div>
                 </div>
@@ -152,17 +146,20 @@ export default defineComponent({
             </template>
             <template v-if="file == null" #empty>
                 <div class="flex items-center justify-center flex-col w-full p-10"  >
-                    <!-- <ion-icon :icon="ioniconsCloudUploadOutline" class="upload-icon"></ion-icon> -->
-                     <i class="material-icons upload-icon">cloud_upload</i>
+                     <i class="material-icons upload-icon border rounded-full p-5" style="font-size: 4rem">cloud_upload</i>
                     <p class="mt-6 mb-0">Drag and drop files to here to upload.</p>
                 </div>
             </template>
         </FileUpload>
         <div class="flex justify-center mt-8 self-stretch">
-            <!-- <ion-button @click="uploadAvatar" fill="outline" class="text-white">
-                Upload Avatar
-            </ion-button> -->
-            <Button @click="uploadAvatar" class="btn text-white">Upload Avatar</Button>
+            <div class="relative w-fit cursor-pointer" @click="uploadAvatar">
+                <div class="absolute inset-0 flex items-center justify-center z-20">
+                    <ProgressSpinner stroke-width="5px" animationDuration=".5s" style="width: 30px; height: 30px" v-if="loading" />
+                </div>
+                <Button class="btn text-white z-10 !p-3" type="button" :loading="loading" @click="uploadAvatar">
+                    Upload Avatar
+                </Button>
+            </div>
         </div>
     </div>
 </template>

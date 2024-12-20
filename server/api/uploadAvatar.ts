@@ -57,11 +57,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // // Get Public URL
-    const { data } = await client.storage.from('avatars').getPublicUrl(fileDirectory);
-    const url = data.publicUrl
+    const { data: {publicUrl} } = await client.storage.from('avatars').getPublicUrl(fileDirectory);
 
     return {
       error: null,
-      url: url
+      url: publicUrl
     }
 })

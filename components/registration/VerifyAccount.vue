@@ -19,7 +19,8 @@ export default defineComponent({
     setup() {
         const store = useStore()
         const supabase = useSupabaseClient()
-        return { store, supabase }
+        const route = useRouter()
+        return { store, supabase, route}
     },
     methods: {
         async submitOTP() {
@@ -29,7 +30,7 @@ export default defineComponent({
             if(!error) {
                 this.store.setUser((session?.user as unknown) as User)
                 this.store.changeAuthenticated(true)
-                navigateTo(this.$route.redirectedFrom?.fullPath || '/')
+                navigateTo('/')
             }
         },
     },

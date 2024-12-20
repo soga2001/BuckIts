@@ -58,7 +58,8 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const supabase = useSupabaseClient()
-    return {store, supabase}
+    const route = useRoute()
+    return {store, supabase, route}
   },
   computed: {
     validAccountInfo() {
@@ -143,7 +144,7 @@ export default defineComponent({
         this.userId = session?.user?.id as string;
         this.store.setUser((session?.user as unknown) as User)
         this.store.changeAuthenticated(true)
-        navigateTo(this.$route.redirectedFrom?.fullPath || '/')
+        navigateTo(this.route.redirectedFrom?.fullPath || '/')
       }
     },
     activateCallback(step: number) {
@@ -304,7 +305,7 @@ export default defineComponent({
                         </Button>
 
                         <Button class="btn" @click="register" :disabled="validPersonalInfo">
-                          Skip
+                          Continue
                           <i class="material-icons">arrow_forward</i>
                         </Button>
                     </div>
@@ -320,6 +321,10 @@ export default defineComponent({
                 <Button class="btn" @click="prev">
                   <i class="material-icons">arrow_back</i>
                   Prev
+                </Button>
+                <Button class="btn" @click="navigateTo('/')">
+                  Skip
+                  <i class="material-icons">skip_next</i>
                 </Button>
               </div>
           </StepPanel>

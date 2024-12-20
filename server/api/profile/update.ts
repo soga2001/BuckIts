@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
-import { User, UserMetaData } from '~/assets/interface/user'
+import { User } from '~/assets/interface/user'
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
