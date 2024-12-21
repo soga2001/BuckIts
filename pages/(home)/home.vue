@@ -2,7 +2,10 @@
 import { defineComponent } from 'vue';
 
 definePageMeta({
+  title: 'Home',
+  description: 'Home page',
   alias: ['/', '/home'],
+  dynamicLayout: 'main',
 });
 
 export default defineComponent({
@@ -16,7 +19,9 @@ export default defineComponent({
 </script>
 
 <template>
-    <div>
-       Hello there
+    <div class="w-full">
+      <NuxtLayout name="main">
+        <NuxtPage/>
+      </NuxtLayout>
     </div>    
 </template>

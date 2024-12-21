@@ -5,17 +5,10 @@
 import RegistrationComponent from '@/components/RegistrationComponent.vue';
 
 
-// definePageMeta({
-//   name: 'register',
-//   alias: '/register',
-//   auth: false,
-// })
-
-// useSeoMeta({
-//   title: 'Register',
-//   description: 'Register for an account',
-//   keywords: 'register, account, signup',
-// })
+definePageMeta({
+    name: 'Register',
+    keepalive: false,
+})
 
 export default defineComponent({
   data() {
@@ -35,30 +28,18 @@ export default defineComponent({
 </script>
 
 <template>
+  <div class="card">
     <RegistrationComponent />
+  </div>  
 </template>
 
 <style lang="scss" scoped>
-
-ion-content {
-  --background: transparent !important;
-  color: white !important;
-}
-
 .activeStep {
   background-color: rgba(var(--ion-color-primary-rgb), 0.1);
 
   color: var(--ion-color-primary);
 
 }
-
-
-
-
-
-
-
-
 
 
 .card {
@@ -90,44 +71,6 @@ ion-content {
     width: 100%;
 }
 
-ion-input {
-
-    &.has-focus {
-      
-      ion-icon {
-        color: var(--ion-color-primary);
-      }
-    }
-}
-
-
-
-
-ion-button {
-
-
-    &.delete_button {
-        
-      --background: transparent !important;
-      color: red;
-      border: 1px solid red;
-      border-radius: 50%;
-
-        &:hover {
-          color: rgba(var(--ion-color-danger-contrast-rgb));
-          --background: red !important;
-        }
-    
-    }
-
-}
-
-
-
-ion-spinner {
-    width: 1.5rem;
-    height: 1.5rem;
-}
 
 .p-fileupload {
     // border-radius: 10px;

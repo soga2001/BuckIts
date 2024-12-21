@@ -182,11 +182,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <Stepper :linear="true" v-model:value="activeStep" class="p-5 relative h-dvh">
+  <Stepper :linear="true" v-model:value="activeStep" class="p-5 h-dvh overflow-hidden">
       <StepList>
           <Step linear v-slot="{value}" asChild :value="1">
               <div class="flex flex-row flex-auto gap-2">
-                  <button v-tooltip="'Login Information'" id="account-info" class="bg-transparent border-0 inline-flex flex-col gap-2">
+                  <button v-tooltip="'Login Information'" id="account-info" class=" border-0 inline-flex flex-col gap-2">
                       <span
                           :class="[
                               'rounded-full border-2 w-12 h-12 inline-flex items-center justify-center',
@@ -203,7 +203,7 @@ export default defineComponent({
           </Step>
           <Step linear v-slot="{value}" asChild :value="2">
               <div class="flex flex-row flex-auto gap-2">
-                  <button v-tooltip="'Personal Information'" class="bg-transparent border-0 inline-flex flex-col gap-2">
+                  <button v-tooltip="'Personal Information'" class="!bg-transparent border-0 inline-flex flex-col gap-2">
                       <span
                           :class="[
                               'rounded-full border-2 w-12 h-12 inline-flex items-center justify-center',
@@ -235,7 +235,7 @@ export default defineComponent({
           </Step>
           <Step v-slot="{value}" asChild :value="4">
               <div class="flex flex-row pl-2">
-                  <button v-tooltip="'Verify Account'" class="bg-transparent border-0 inline-flex flex-col gap-2" >
+                  <button v-tooltip="'Verify Account'" class="border-0 inline-flex flex-col gap-2" >
                       <span
                           :class="[
                               'rounded-full border-2 w-12 h-12 inline-flex items-center justify-center',
@@ -250,8 +250,8 @@ export default defineComponent({
           </Step>
       </StepList>
       
-      <StepPanels class="step-panels w-full z-1 overflow-y-auto">
-          <StepPanel class="w-full" :value="1">
+      <StepPanels class="step-panels w-full overflow-y-auto">
+          <StepPanel class="w-full sticky top-4" :value="1">
               <div class="flex w-full flex-col gap-1 mx-auto mt-5" style=" max-width: 600px">
 
                 <AccountInformation :emailProp="email" :passwordProp="password" :confirmPassProp="confirmPassword" v-model:email="email" v-model:password="password" v-model:confirmPassword="confirmPassword"></AccountInformation>
@@ -267,9 +267,10 @@ export default defineComponent({
               </div>
           </StepPanel>
           <StepPanel :value="2">
-              <div class="flex flex-col gap-1 mx-auto mt-5" style=" max-width: 600px">
+              <div class="flex flex-col gap-1 mx-auto mt-5 " style=" max-width: 600px">
 
                 <PersonalInformation 
+                class="mb-2"
                   :fullnameProp="fullname" :phoneProp="phone" :usernameProp="username" :monthProp="month" :dayProp="day" :yearProp="year" :bioProp="bio"
                   v-model:dob="dob"
                   v-model:fullname="fullname" v-model:phone="phone" v-model:username="username" v-model:month="month" v-model:day="day" v-model:year="year" v-model:bio="bio"></PersonalInformation>
@@ -279,7 +280,7 @@ export default defineComponent({
                   <Message severity="error" icon="pi pi-times-circle">{{ registerErrorMessage }}</Message>
                 </div>
 
-                <div class="sticky bottom-2 w-full bg p-2">
+                <div class="sticky bottom-1 w-full bg p-2">
                   <div class="flex w-full justify-between ">
                     <Button class="btn" @click="prev">
                       <i class="material-icons">arrow_back</i>
@@ -298,7 +299,7 @@ export default defineComponent({
               <div class="w-full flex flex-col gap-2 mx-auto mt-5">
                   <div class="text-center w-full">
                     <UploadAvatar :userId="userId" :username="username" v-model="file"></UploadAvatar>
-                    <div class="flex w-full pt-6 justify-between">
+                    <div class="flex w-full pt-6 justify-between sticky bottom-2">
                         <Button class="btn" @click="prev">
                           <i class="material-icons">arrow_back</i>
                           Prev
@@ -317,7 +318,7 @@ export default defineComponent({
               <div class="flex flex-col w-full justify-center gap-5 mx-auto" style="min-height: 16rem; max-width: 24rem">
                   <VerifyAccount :email="email" v-model:otp="otp"></VerifyAccount>
               </div>
-              <div class="flex w-full pt-6 justify-start">
+              <div class="flex w-full pt-6 justify-start sticky bottom-2">
                 <Button class="btn" @click="prev">
                   <i class="material-icons">arrow_back</i>
                   Prev
@@ -336,11 +337,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-ion-content {
-  --background: transparent !important;
-  color: white !important;
-}
-
 .activeStep {
   background-color: $primary-color-active !important; 
   color: $primary-color-text !important;
@@ -349,26 +345,6 @@ ion-content {
 
 .prevStep {
   background-color: $primary-color-light !important;
-}
-
-
-ion-icon {
-    font-size: 1.5rem;
-}
-
-
-
-
-
-
-
-
-
-.card {
-    width: 100%;
-    padding: 0 30px;
-    border-radius: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .form {
@@ -381,17 +357,10 @@ ion-icon {
 
 .step-panels {
     width: 100%;
+    background-color: transparent;
 
     min-height: 500px;
     height: 100%;
-}
-
-.p-fileupload {
-    // border-radius: 10px;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-
 }
 
 .p-step {

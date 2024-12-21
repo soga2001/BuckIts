@@ -7,17 +7,15 @@ export default defineComponent({
             userProfile: {} as UserMetaData,
             error: false,
             loading: true,
-            username: this.$route.params.username,
-            items: ref([
-                { route: `/@${this.$route.params.username}`, label: 'Buckits', icon: 'checklist' },
-                { route: `/@${this.$route.params.username}/media`, label: 'Media', icon: 'image' },
-            ]),
-            path: this.$route.path,
         }
+    },
+    setup() {
+        const route = useRoute()
+        return { route }
     },
     methods: {
         async fetch() {
-            const { data } = await useFetch(`/api/profile/${this.$route.params.username}`);
+            const { data } = await useFetch(`/api/profile/${this.route.params.username}`);
             const {status, user} = data.value;
             if (status === 200) {
                 this.userProfile = user as UserMetaData;
@@ -45,6 +43,20 @@ export default defineComponent({
                 })
             }
             
+        }
+    },
+    computed: {
+        path() {
+            return this.route.path;
+        },
+        username(): string | string[] {
+            return this.route.params.username;
+        },
+        items() {
+            return [
+                { route: `/@${this.route.params.username}`, label: 'Buckits', icon: 'checklist' },
+                { route: `/@${this.route.params.username}/media`, label: 'Media', icon: 'image' },
+            ]
         }
     }
 })
@@ -75,9 +87,9 @@ export default defineComponent({
     </div>
     <Tabs :value="path">
             <TabList>
-                <Tab class="" v-for="tab in items" :key="tab.label" :value="tab.route">
-                    <router-link class="grow" v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
-                        <a v-ripple :href="href" @click="navigate" class="flex items-center gap-2 text-inherit">
+                <Tab class="!p-0 !m-0 " v-for="tab in items" :key="tab.label" :value="tab.route">
+                    <router-link class="grow " v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
+                        <a v-ripple :href="href" @click="navigate" class="flex items-center gap-2">
                             <!-- <i :class="tab.icon" /> -->
                             <i class="material-icons">{{ tab.icon }}</i>
                             <span>{{ tab.label }}</span>

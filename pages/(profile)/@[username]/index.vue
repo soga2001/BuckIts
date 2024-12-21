@@ -20,8 +20,15 @@ export default defineComponent({
     mounted() {
         useHead({
             title: `Buckits`,
+            meta: [
+                {
+                    name: 'description',
+                    content: `Buckits`,
+                }
+            ]
         })
     }
+
 })
 </script>
 
