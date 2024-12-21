@@ -20,7 +20,7 @@ export default defineComponent({
         this.store.setUser(user as unknown as User)
         this.store.changeAuthenticated(true)
       }
-    }
+    },
   },
   created() {
     this.getUser()
@@ -33,7 +33,7 @@ export default defineComponent({
 
 <template>
   <NuxtLayout>
-    <NuxtPage keepalive/>
+    <NuxtPage/>
   </NuxtLayout>
 </template>
 
