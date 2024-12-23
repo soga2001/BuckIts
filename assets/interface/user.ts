@@ -30,5 +30,26 @@ export interface UserMetaData {
     location: string,
     dob: string,
     private: boolean,
+    verified: boolean,
+    followers: number,
+    following: number,
+}
+
+export interface UserProfile {
+    id: string
+    username: string
+    full_name: string
+    bio: string
+    avatar_url: string
+    website: string
+    location: string
+    dob: string
+    followers: number
+    following: number
+    created_at: string
+    private: boolean
     verified: boolean
+    is_following: boolean
+    is_follower: boolean
+    is_user: boolean
 }

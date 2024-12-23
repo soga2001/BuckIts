@@ -73,3 +73,25 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+### Generate Supabase Database types ###
+
+Instal supabase cli
+```
+# brew 
+brew install supabase/tap/supabase
+
+# npm
+npm install supabase --save-dev
+```
+
+Sign in to supabase
+```
+supabase login
+```
+
+Generate supabase database types for a project
+```
+supabase gen types typescript --project-id <project_id> > types/database.types.ts
+```

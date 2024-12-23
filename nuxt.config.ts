@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     //   login: '/login',
     //   callback: '/confirm',
     //   include: undefined,
-    //   exclude: ['/register', '/login/withOtp'],
+    //   exclude: ['/register', '/login'],
     //   cookieRedirect: false,
     // },
     cookieOptions: {

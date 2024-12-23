@@ -8,6 +8,7 @@ import RegistrationComponent from '@/components/RegistrationComponent.vue';
 definePageMeta({
     name: 'Register',
     keepalive: false,
+    auth: false,
 })
 
 export default defineComponent({

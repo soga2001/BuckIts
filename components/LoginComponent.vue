@@ -26,7 +26,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    return {store}
+    const route = useRoute()
+    return {store, route}
   },
   methods: {
     async login() {        
@@ -39,11 +40,12 @@ export default defineComponent({
         })
 
         if (response.error) {
+          console.log(response.error)
             this.error = response.error
         } else {
             this.store.setUser(response.data.user)
             this.store.changeAuthenticated(true)
-            this.$router.push('/')
+            navigateTo(this.route.redirectedFrom || '/')
         }
     }
   },

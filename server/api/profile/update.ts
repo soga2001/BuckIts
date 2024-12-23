@@ -1,8 +1,9 @@
 import { serverSupabaseClient } from '#supabase/server'
 import { User } from '~/assets/interface/user'
+import { Database } from '~/types/database.types'
 
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event)
+  const client = await serverSupabaseClient<Database>(event)
   const body = await readBody(event)
 
 
@@ -21,6 +22,7 @@ export default defineEventHandler(async (event) => {
   const {data: {user}, error: err} = await client.auth.updateUser({
       data: body
   })
+
 
   if (error) {
       return {

@@ -5,7 +5,8 @@ definePageMeta({
     name: 'Login',
     keepalive: false,
     // layout: false,
-    dynamicLayout: 'main'
+    dynamicLayout: 'main',
+    auth: false,
 })
 
 export default defineComponent({

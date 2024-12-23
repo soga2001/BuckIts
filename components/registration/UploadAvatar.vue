@@ -68,6 +68,7 @@ export default defineComponent({
             if(!error) {
                 this.store.setUser(user as User)
             }
+            this.loading = false
         },
         fileChange(e: FileUploadSelectEvent) {
             this.file = e.files[0] as File;

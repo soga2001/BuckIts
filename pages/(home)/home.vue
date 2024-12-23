@@ -20,8 +20,6 @@ export default defineComponent({
 
 <template>
     <div class="w-full">
-      <NuxtLayout name="main">
         <NuxtPage/>
-      </NuxtLayout>
     </div>    
 </template>

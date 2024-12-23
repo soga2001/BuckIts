@@ -33,7 +33,7 @@ export default defineComponent({
                 console.error("error",error);
             }
             else {
-                console.log("Logged out");
+                // console.log("Logged out");
                 this.store.setUser({} as User);
                 this.store.changeAuthenticated(false);
                 navigateTo('/login');

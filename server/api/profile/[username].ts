@@ -1,19 +1,30 @@
 import { serverSupabaseClient } from '#supabase/server'
+//import database types
+import type { Database } from '~/types/database.types'
+
 
 export default defineEventHandler(async (event) => {
     const username = getRouterParam(event, 'username') as string
-    const client = await serverSupabaseClient(event)
+    const client = await serverSupabaseClient<Database>(event)
 
-  const { data: user, error } = await client.from('profiles').select('*').eq('username', username).single()
-  if (error) {
+  const {data: {user: currUser}} = await client.auth.getUser()
+  
+
+  const data =  await client
+      .rpc('get_user_profile', { u: username, v: currUser?.id ?? null} as { u: string; v: string | null }).single();
+    
+
+  if (data.error != null) {
       return {
-          status: 500,
-          user: null
+        error: data.error,
+        status: data.status,
+        user: null
       }
   }  
   return {
-    status: 200,
-    user: user
+    error: data.error,
+    status: data.status,
+    user: data.data
   }
 })
   

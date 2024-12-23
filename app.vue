@@ -33,6 +33,7 @@ export default defineComponent({
 
 <template>
   <NuxtLayout>
+    <!-- <UploadAvatar/> -->
     <NuxtPage/>
   </NuxtLayout>
 </template>

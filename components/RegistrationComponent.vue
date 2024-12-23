@@ -76,14 +76,6 @@ export default defineComponent({
 
   },
   methods: {
-    async userExists() {
-      const { data } = await this.supabase.from('profiles').select("username").eq('username', this.username);
-
-      if(data?.length) {
-        return true;
-      }
-      return false;
-    },
 
     removePhoneMask() {
       this.unmaskedPhone = this.phone.replace(/\D/g, '');

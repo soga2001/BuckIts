@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
     // read body
     const body = await readBody(event)
     const { email, password, phone, full_name, username, bio, dob } = body
-
     return await client.auth.signUp(
         {
           email: email,
@@ -17,11 +16,14 @@ export default defineEventHandler(async (event) => {
               username: username,
               bio: bio,
               dob: dob,
-              location: '',
+              followers: 0,
+              following: 0,
+              private: false,
+              verified: false,
               website: '',
+              location: '',
               avatar_url: '',
             },
-            
           }
         }
     )
