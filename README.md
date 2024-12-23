@@ -75,6 +75,23 @@ bun run preview
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
 
+# Supabase #
+### Getting Started ###
+
+- Create a supabase account via [signup page](https://supabase.com/dashboard/sign-up)
+- Create a new project
+- Create a `.env` file in the root directory of the project
+- Add the following environment variables to the `.env` file
+  ```
+  SUPABASE_KEY=<api_key>
+  SUPABASE_URL=<project_url>
+  ```
+- Go to `SQL Editor` on the left vertical navbar
+- Create tables and triggers
+  - Paste `user_profile.sql` from `/database` directory into the editor and run
+  - Paste `follow_table.sql` from `/database` directory into the editor and run
+
+
 ### Generate Supabase Database types ###
 
 Instal supabase cli
@@ -95,3 +112,7 @@ Generate supabase database types for a project
 ```
 supabase gen types typescript --project-id <project_id> > types/database.types.ts
 ```
+`project_id` is located in the project settings of a given project
+
+
+----
