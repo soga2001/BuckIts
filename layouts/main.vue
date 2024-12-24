@@ -6,9 +6,6 @@ export default defineComponent({
 
         }
     },
-    created() {
-        console.log('created')
-    }
 })
 </script>
 

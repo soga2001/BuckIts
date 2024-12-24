@@ -1,4 +1,7 @@
 import Aura from '@primevue/themes/aura';
+import Material from '@primevue/themes/material';
+import Lara from '@primevue/themes/lara';
+import Nora from '@primevue/themes/nora';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -11,7 +14,8 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@nuxtjs/device'
   ],
   vite: {
     css: {
@@ -54,7 +58,12 @@ export default defineNuxtConfig({
   primevue: {
     options: {
         theme: {
-            preset: Aura
+            preset: Aura,
+            options: {
+              prefix: 'p',
+              darkModeSelector: '.my-app-dark',
+              cssLayer: false
+          }
         }
     }
   }

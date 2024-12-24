@@ -1,6 +1,6 @@
 @use "sass:color";
 
-$primary-color: rgb(255, 0, 255);
+$primary-color: #ff00ff;
 $primary-color-light: color.scale($primary-color, $lightness:20%);
 $primary-color-dark: color.scale($primary-color, $lightness:-20%);
 $primary-color-hover: color.scale($primary-color, $lightness:10%);

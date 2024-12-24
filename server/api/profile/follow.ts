@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const { data: {user}, error } = await client.auth.getUser()
     if (user == null && error) {
         return {
-            error: error.message,
+            error: error,
             status: 401,
             followed: is_following,
         }
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
             const { data, error } = await client.from('follow').delete().eq('following_user', user.id).eq('followed_user', id)
             if (error) {
                 return {
-                    error: error.message,
+                    error: error,
                     status: 500,
                     followed: false,
                 }
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
         }
         catch (error: any) {
             return {
-                error: error.message,
+                error: error,
                 status: 500,
                 followed: false,
             }
@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
             })
             if (error) {
                 return {
-                    error: error.message,
+                    error: error,
                     status: 500,
                     followed: false,
                 }
@@ -64,7 +64,7 @@ export default defineEventHandler(async (event) => {
         }
         catch (error: any) {
             return {
-                error: error.message,
+                error: error,
                 status: 500,
                 followed: false,
             }

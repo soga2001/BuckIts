@@ -2,6 +2,7 @@
 import { defineComponent } from 'vue'
 import { useStore } from '~/stores/stores';
 import type { User } from '~/assets/interface/user';
+import themeButton from './themeButton.vue';
 
 
 export default defineComponent({
@@ -16,10 +17,6 @@ export default defineComponent({
                         this.logout();
                     }
                 },
-                {
-                    label: 'Export',
-                    icon: 'upload',
-                }
             ]
         }
     },
@@ -36,7 +33,9 @@ export default defineComponent({
                 // console.log("Logged out");
                 this.store.setUser({} as User);
                 this.store.changeAuthenticated(false);
-                navigateTo('/login');
+                reloadNuxtApp({
+                    ttl: 1000, // default 10000
+                });
             }
         },
     },
@@ -44,6 +43,9 @@ export default defineComponent({
         return {
             store: useStore()
         }
+    },
+    components: {
+        themeButton
     }
 })
 </script>
@@ -52,47 +54,48 @@ export default defineComponent({
     <div class="flex flex-col h-full w-full">
         <div class="flex items-center justify-between px-6 pt-4 shrink-0">
             <span class="inline-flex items-center gap-2">
-                <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="..." fill="var(--p-primary-color)" />
                     <path d="..." fill="var(--p-text-color)" />
-                </svg>
-                <span class="font-normal text-2xl text-primary">Buck<span class="font-black">IT</span></span>
+                </svg> -->
+                <span class="font-normal text-2xl">Buck<span class="font font-black">IT</span></span>
             </span>
-            <!-- <span>
-                <Button type="button" @click="closeCallback" icon="pi pi-times" rounded outlined></Button>
-            </span> -->
+            <span>
+                <ThemeButton />
+            </span>
         </div>
         <div class="overflow-y-auto p-2">
             <ul class="list-none p-0 m-0 flex flex-col gap-1  overflow-hidden">
                 <li>
-                    <NuxtLink to="/" activeClass="active-link" v-ripple class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple">
-                        <i class="material-icons mr-2">home</i>
+                    <NuxtLink to="/home" activeClass="active-link" v-ripple class="nav-link flex items-center cursor-pointer p-4 rounded transition-colors p-ripple">
+                        <i class="material-icons-round mr-2">home</i>
                         <span>Home</span>
                     </NuxtLink>
                 </li>
                 <li v-if="store.isAuthenticated">
-                    <NuxtLink :to="`/@${store.user.user_metadata?.username}`" activeClass="active-link" v-ripple class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple">
-                        <i class="material-icons mr-2">account_circle</i>
+                    
+                    <NuxtLink :to="`/@${store.user.user_metadata?.username}`" activeClass="active-link" v-ripple class="nav-link flex items-center cursor-pointer p-4 rounded transition-colors p-ripple">
+                        <i class="material-icons-round mr-2">account_circle</i>
                         <span>Profile</span>
                     </NuxtLink>
                 </li>
                 <li v-if="!store.isAuthenticated">
-                    <NuxtLink to="/login" activeClass="active-link" v-ripple class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple">
-                        <i class="material-icons mr-2">login</i>
+                    <NuxtLink to="/login" activeClass="active-link" v-ripple class="nav-link flex items-center cursor-pointer p-4 rounded  transition-colors p-ripple">
+                        <i class="material-icons-round mr-2">login</i>
                         <span>Login</span>
                     </NuxtLink>
                 </li>
                 <li v-if="!store.isAuthenticated">
-                    <NuxtLink to="/register" activeClass="active-link" v-ripple class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple">
-                        <i class="material-icons mr-2">how_to_reg</i>
+                    <NuxtLink to="/register" activeClass="active-link" v-ripple class="nav-link flex items-center cursor-pointer p-4 rounded  transition-colors p-ripple">
+                        <i class="material-icons-round mr-2">person_add</i>
                         <span>Register</span>
                     </NuxtLink>
                 </li>
             </ul>
         </div>
         <div class="mt-auto" v-if="store.isAuthenticated">
-            <hr class="mb-2 mx-4 border-t border-0 border-surface-200 dark:border-surface-700" />
-            <a v-ripple @click="toggle" class="mx-4 mb-2 flex items-center cursor-pointer p-4 gap-3 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple">
+            <hr class="mb-2 mx-4 border-t border-0 dark:border-surface-700" />
+            <a v-ripple @click="toggle" class="hover mx-4 mb-2 flex items-center cursor-pointer p-4 gap-3 rounded  transition-colors p-ripple">
                 <Avatar v-if="store.getUserMetaData?.avatar_url" :image="store.getUserMetaData?.avatar_url" size="large" shape="circle" />
                 <Avatar v-else image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" size="large" shape="circle" />
                 <div class="flex flex-col gap-2">
@@ -103,7 +106,6 @@ export default defineComponent({
             <Menu ref="menu" id="overlay_menu" :model="menuItems" :popup="true">
                 <template #item="{ item, props }">
                     <a v-ripple class="flex items-center" v-bind="props.action">
-                        <!-- <span :class="item.icon" /> -->
                          <i class="material-icons mr-2">{{ item.icon }}</i>
                         <span>{{ item.label }}</span>
                         <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />

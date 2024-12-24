@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 definePageMeta({
-    name: 'Home',
     keepalive: false,
     auth: false,
 })
@@ -10,6 +9,6 @@ definePageMeta({
 
 <template>
     <div class="w-full">
-        There
-    </div>    
+      Hello
+    </div>
 </template>

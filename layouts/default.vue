@@ -20,21 +20,12 @@ export default defineComponent({
 </script>
 
 <template>
-    <Splitter style="height: 100vh">
-        <SplitterPanel class="flex" :size="25" :minSize="15">
-            <navbar />
-        </SplitterPanel>
-        <SplitterPanel class=""  :size="75" > 
-            <slot /> 
-        </SplitterPanel>
-        <!-- <SplitterPanel class="pt-4" :size="25" :minSize="10">
-            <div class="flex justify-center">
-                <IconField class="">
-                    <InputIcon class="pi pi-search" />
-                    <InputText v-model="search" placeholder="Search" />
-                </IconField>
-            </div>
-            <div id="right"></div>
-        </SplitterPanel> -->
-    </Splitter>
+    <div class="h-dvh w-full  flex flex-row">
+      <div class="border-r border-surface-100 dark:border-surface-700 w-full max-w-80">
+          <navbar />
+      </div>
+      <div class="grow" > 
+          <slot /> 
+      </div>
+    </div>
 </template>

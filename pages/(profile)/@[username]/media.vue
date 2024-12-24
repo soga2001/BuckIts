@@ -1,28 +1,26 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+
+const {username} = defineProps<{
+    username: string
+}>()
 
 definePageMeta({
-    name: "profile-media",
+    name: 'Media',
+    keepalive: true,
+    auth: true,
 })
 
-export default defineComponent({
-    props: {
-        username: {
-            type: String,
-            required: true,
+useHead({
+    title: 'Media',
+    meta: [
+        {
+            hid: 'description',
+            name: 'description',
+            content: 'User media page',
         },
-    },
-    data() {
-        return {
-
-        }
-    },
-    mounted() {
-        useHead({
-            title: `Media`,
-        })
-    }
+    ],
 })
+
 </script>
 
 <template>

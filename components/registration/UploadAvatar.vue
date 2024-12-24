@@ -108,7 +108,7 @@ export default defineComponent({
             <template #header="{ chooseCallback }">
             <div class="flex flex-wrap justify-between items-center flex-1 gap-4">
                 <div class="flex gap-2">
-                    <Button rounded :disabled="disabled" @click="chooseCallback()" class="avatar-upload !p-2 !bg-transparent btn-secondary !text-white">
+                    <Button rounded :disabled="disabled" @click="chooseCallback()" class="avatar-upload !p-2 !bg-transparent btn-secondary">
                         <i class="material-icons">upload</i>
                     </Button>
                 </div>
@@ -157,7 +157,7 @@ export default defineComponent({
                 <div class="absolute inset-0 flex items-center justify-center z-20">
                     <ProgressSpinner stroke-width="5px" animationDuration=".5s" style="width: 30px; height: 30px" v-if="loading" />
                 </div>
-                <Button class="btn text-white z-10 !p-3" type="button" :loading="loading" @click="uploadAvatar">
+                <Button class="btn z-10 !p-3" type="button" :loading="loading" @click="uploadAvatar">
                     Upload Avatar
                 </Button>
             </div>
@@ -198,7 +198,7 @@ ion-button {
         transition: all .1s ease-in-out;
 
         &:hover {
-        color: white;
+      // color: white;;
         --background: rgba(var(--ion-color-primary-shade-rgb), .4);
         border: 1px solid white;
         }

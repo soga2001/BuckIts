@@ -9,6 +9,7 @@ export const useStore = defineStore({
       authenticated: false,
       user: {} as User,
       desktop: true,
+      dark: true,
     }
   },
   actions: {
@@ -22,6 +23,9 @@ export const useStore = defineStore({
         this.user.user_metadata = value
 
     },
+    toggleDark() {
+        this.dark = !this.dark
+    },
     removeUser() {
         this.user = {} as User
     },
@@ -33,6 +37,7 @@ export const useStore = defineStore({
     isAuthenticated: (state) => state.authenticated,
     getUser: (state) => state.user,
     getUserMetaData: (state) => state.user.user_metadata,
-    isDesktop: (state) => state.desktop
+    isDesktop: (state) => state.desktop,
+    getTheme: (state) => state.dark
   },
 })

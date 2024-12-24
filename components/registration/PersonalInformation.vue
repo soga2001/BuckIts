@@ -234,10 +234,6 @@ export default defineComponent( {
                 <div class="flex flex-col gap-2">
                     <span class="text-sm">Month</span>
                     <div class="custom-select">
-                    <!-- <select class="dob-select" v-model="month" name="month" id="month">
-                        <option class="italic" value="" disabled selected>Select Month</option>
-                        <option :class="{active: month == m, option: true }" v-for="(m, index) in monthsList" :key="m" :value="m" :disabled="((currentMonth < index + 1) && (currentYear == computedYear))">{{m}}</option>
-                    </select> -->
                     <Select v-model="month" :options="monthsList" checkmark size="small" placeholder="Month" class="w-full">
                         <template #optiongroup="slotProps">
                             <div class="flex items-center">
@@ -252,10 +248,6 @@ export default defineComponent( {
                 <div class="flex flex-col gap-2">
                     <span class="text-sm">Day</span>
                     <div class="custom-select">
-                    <!-- <select class="dob-select" v-model="day" placeholder="Select a day" name="day" id="day">
-                        <option class="italic" value="" disabled selected>Select Day</option>
-                        <option :class="{active: computedDay == m, option: true }" v-for="m in dayList" :key="m" :value="m" :disabled="((currentMonth == parseInt(monthMap[month])) && currentYear == computedYear ) && (todayDate < m)">{{m}} </option>
-                    </select> -->
                     <Select v-model="day" :options="dayList" checkmark size="small" placeholder="Day" class="w-full">
                         <template #optiongroup="slotProps">
                             <div class="flex items-center">
@@ -270,10 +262,6 @@ export default defineComponent( {
                 <div class="flex flex-col gap-2">
                     <span class="text-sm">Year</span>
                     <div class="custom-select">
-                    <!-- <select class="dob-select" v-model="year" placeholder="Select a year" name="year" id="year">
-                        <option class="italic" value="" disabled selected>Select Year</option>
-                        <option :class="{active: computedYear  == m, option: true }" v-for="m in yearList" :key="m" :value="m">{{m}}</option>
-                    </select> -->
                     <Select  v-model="year" :options="yearList" checkmark size="small" placeholder="Year" class="w-full dob-select">
                         <template #optiongroup="slotProps">
                             <div class="flex items-center">
@@ -292,8 +280,6 @@ export default defineComponent( {
                 <div class="flex-column">
                 <label>Bio <span class="italic text-sm">(Optional)</span></label>
                 </div>
-
-                <!-- <ion-textarea fill="outline" :rows="3" :counter="true" :maxlength="120"></ion-textarea> -->
                 <Textarea  v-model="bio" rows="5" fluid />
             </div>
 
@@ -310,7 +296,7 @@ cursor: pointer;
 appearance: none;
 
 background-color: black;
-color: white;
+// color: white;
 font-size: 1rem !important;
 
 padding: 10px 10px;

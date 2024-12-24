@@ -174,7 +174,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Stepper :linear="true" v-model:value="activeStep" class="p-5 h-dvh overflow-hidden">
+  <Stepper :linear="true" v-model:value="activeStep" class="overflow-hidden pt-2 min-[1010px]:p-5">
       <StepList>
           <Step linear v-slot="{value}" asChild :value="1">
               <div class="flex flex-row flex-auto gap-2">
@@ -242,15 +242,15 @@ export default defineComponent({
           </Step>
       </StepList>
       
-      <StepPanels class="step-panels w-full overflow-y-auto">
-          <StepPanel class="w-full sticky top-4" :value="1">
+      <StepPanels class="w-full overflow-y-auto">
+          <StepPanel :value="1" class="!bg-transparent ">
               <div class="flex w-full flex-col gap-1 mx-auto mt-5" style=" max-width: 600px">
 
                 <AccountInformation :emailProp="email" :passwordProp="password" :confirmPassProp="confirmPassword" v-model:email="email" v-model:password="password" v-model:confirmPassword="confirmPassword"></AccountInformation>
                 
                 <div class="sticky bottom-2 w-full bg p-2">
                   <div class="flex w-full justify-end ">
-                      <Button class="btn" @click="next" :disabled="validAccountInfo">
+                      <Button variant="outlined" @click="next" :disabled="validAccountInfo">
                       Next
                       <i class="material-icons">arrow_forward</i>
                       </Button>
@@ -258,7 +258,7 @@ export default defineComponent({
                 </div>
               </div>
           </StepPanel>
-          <StepPanel :value="2">
+          <StepPanel :value="2" class="overflow-y-auto">
               <div class="flex flex-col gap-1 mx-auto mt-5 " style=" max-width: 600px">
 
                 <PersonalInformation 
@@ -274,12 +274,12 @@ export default defineComponent({
 
                 <div class="sticky bottom-1 w-full bg p-2">
                   <div class="flex w-full justify-between ">
-                    <Button class="btn" @click="prev">
+                    <Button variant="outlined" @click="prev">
                       <i class="material-icons">arrow_back</i>
                       Prev
                     </Button>
 
-                    <Button class="btn" @click="register" :disabled="validPersonalInfo">
+                    <Button variant="outlined" @click="register" :disabled="validPersonalInfo">
                       Sign Up
                       <i class="material-icons">login</i>
                     </Button>
@@ -292,12 +292,12 @@ export default defineComponent({
                   <div class="text-center w-full">
                     <UploadAvatar :userId="userId" :username="username" v-model="file"></UploadAvatar>
                     <div class="flex w-full pt-6 justify-between sticky bottom-2">
-                        <Button class="btn" @click="prev">
+                        <Button variant="outlined" @click="prev">
                           <i class="material-icons">arrow_back</i>
                           Prev
                         </Button>
 
-                        <Button class="btn" @click="register" :disabled="validPersonalInfo">
+                        <Button variant="outlined" @click="register" :disabled="validPersonalInfo">
                           Continue
                           <i class="material-icons">arrow_forward</i>
                         </Button>
@@ -311,11 +311,11 @@ export default defineComponent({
                   <VerifyAccount :email="email" v-model:otp="otp"></VerifyAccount>
               </div>
               <div class="flex w-full pt-6 justify-start sticky bottom-2">
-                <Button class="btn" @click="prev">
+                <Button variant="outlined" @click="prev">
                   <i class="material-icons">arrow_back</i>
                   Prev
                 </Button>
-                <Button class="btn" @click="navigateTo('/')">
+                <Button variant="outlined" @click="navigateTo('/')">
                   Skip
                   <i class="material-icons">skip_next</i>
                 </Button>

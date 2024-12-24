@@ -40,15 +40,23 @@ export default defineComponent({
         })
 
         if (response.error) {
-          console.log(response.error)
             this.error = response.error
         } else {
             this.store.setUser(response.data.user)
             this.store.changeAuthenticated(true)
-            navigateTo(this.route.redirectedFrom || '/')
+            this.$route.query.login ? this.$router.push({query: {}}).then(() => {
+                reloadNuxtApp()
+            }) : this.$router.push('/').then(() => {
+                reloadNuxtApp()
+            })
         }
     }
   },
+  computed: {
+    isModal() {
+      return this.$route.query.login === 'true'
+    }
+  }
 })
 </script>
 
@@ -92,28 +100,28 @@ export default defineComponent({
               <span class="link text-sm">Forgot password?</span>
             </div>
             <div class="flex justify-center">
-              <input :disabled="email == '' && password == ''"class="btn text-md font-bold" type="submit" value="Sign In"/>
+              <Button :disabled="email == '' && password == ''" variant="outlined" class="text-md font-bold px-20" type="submit" label="Sign In"/>
             </div>
             <p class="flex justify-center items-center">
                 Don't have an account? 
-                <Button as="router-link" class="!bg-transparent text-primary !border-none hover:underline" to="/register">Sign up</Button>
+                <Button variant="text" as="router-link" class="hover:!bg-transparent hover:underline" :to="isModal ? {query: {register: 'true'}} : '/register'">Sign up</Button>
             </p>
 
             <div class="separator p-5">
-              <hr class="line bg-white">
+              <hr class="line ">
               <span>Or</span>
-              <hr class="line bg-white">
+              <hr class="line">
             </div>
 
-            <div class="flex gap-5">
-            <button class="btn google">
+            <div class="flex justify-center gap-5">
+            <Button class="btn-secondary google !px-10">
                 <span class="pi pi-google"></span>
                 Google 
-            </button>
-            <button class="btn apple">
+            </Button>
+            <Button class="btn-secondary apple !px-10">
                 <span class="pi pi-apple"></span>
                 Apple 
-            </button>
+            </Button>
             </div>
         </form>
     </div>
@@ -122,7 +130,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .main {
 
-    height: 100vh;
     max-width: 600px;
     padding: 30px 0;
     margin: 0 auto;
@@ -150,22 +157,6 @@ export default defineComponent({
 }
 
 
-.button-submit {
-
-  // height: 50px;
-  padding: 13px 40px;
-  border-radius: 10px;
-  border: 1px solid var(--ion-color-primary);
-  color: white;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-
-  &:hover {
-    background-color: rgba(var(--ion-color-primary-rgb), 0.2);
-  }
-}
-
-
 
 
 .p {
@@ -186,7 +177,7 @@ export default defineComponent({
   font-weight: 500;
   gap: 10px;
   border: 1px solid #ededef;
-  background-color: transparent;
+  // background-color: transparent;/
   cursor: pointer;
 }
 
@@ -202,8 +193,9 @@ export default defineComponent({
 .separator .line {
   display: block;
   width: 100%;
-  height: 1px;
-  border: 0;
+  height: 2px;
+  background-color: var(--border-color);
+  // border: 0;
 }
 </style>
   

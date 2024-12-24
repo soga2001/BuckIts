@@ -43,7 +43,11 @@ export default defineComponent({
     confirmPassword() {
       this.$emit('update:confirmPassword', this.confirmPassword)
     },
-
+  },
+  computed: {
+    isModal() {
+      return this.$route.query.register === 'true'
+    }
   },
 })
 </script>
@@ -104,7 +108,7 @@ export default defineComponent({
         
 
             <p class="flex items-center">Already have an account? 
-              <Button as="router-link" class="!bg-transparent text-primary !border-none hover:underline" to="/login">Sign in</Button>
+              <Button as="router-link" class="!bg-transparent text-primary !border-none hover:underline" :to="isModal ? {query: {login: true}} : '/login'">Sign in</Button>
             </p>
           </div>
       </form>
@@ -112,7 +116,4 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-ion-icon {
-    font-size: 1.5rem;
-}
 </style>

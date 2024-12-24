@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   
 
   const data =  await client
-      .rpc('get_user_profile', { u: username, v: currUser?.id ?? null} as { u: string; v: string | null }).single();
+      .rpc('get_user_profile', { u: username}).single();
     
 
   if (data.error != null) {

@@ -1,24 +1,16 @@
-<script lang="ts">
+<script setup lang="ts">
 import LoginComponent from '~/components/LoginComponent.vue';
 
 definePageMeta({
     name: 'Login',
     keepalive: false,
-    // layout: false,
-    dynamicLayout: 'main',
     auth: false,
 })
 
-export default defineComponent({
-    data() {
-        return {
-
-        }
-    },
-    components: {
-        LoginComponent
-    }
+useHead({
+  title: 'Login',
 })
+
 </script>
 
 <template>

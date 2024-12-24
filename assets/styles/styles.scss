@@ -2,53 +2,77 @@
 @use 'primeicons/primeicons.css';
 @use 'material-icons/iconfont/material-icons.css';
 
+:root { 
+    --p-primary-color: rgb(255, 0, 255);
+    --p-button-outlined-primary-border-color: rgb(255, 0, 255);
+    --p-button-outlined-primary-hover-background: rgba(255, 0, 255, .3);
+    --p-button-primary-hover-background: rgb(214, 0, 214);
+    --p-button-primary-hover-border-color: rgb(255, 0, 255);
+    --p-button-text-primary-hover-background: rgba(255, 0, 255, .1);
 
-.bg-primary {
-    background-color: $primary-color !important;
+    --active-background-color: rgba(185, 185, 185, 0.3);
+    --hover-background-color: rgba(185, 185, 185, 0.2);
+    --border-color: rgba(185, 185, 185, 0.5);
+    --border-color-lighter: rgba(0,0,0);
+
+    --text-color: rgba(0, 0, 0);
 }
 
-.bg {
-    background-color: #18181b !important;
+:root[class="my-app-dark"] { 
+    --p-primary-color: rgb(255, 0, 255);
+    --p-button-outlined-primary-border-color: rgb(255, 0, 255);
+    --p-button-outlined-primary-hover-background: rgba(255, 0, 255, .3);
+    --p-button-primary-hover-background: rgb(214, 0, 214);
+    --p-button-primary-hover-border-color: rgb(255, 0, 255);
+    --p-button-text-primary-hover-background: rgba(255, 0, 255, .1);
+
+    --active-background-color: rgba(185, 185, 185, 0.2);
+    --hover-background-color: rgba(185, 185, 185, 0.1);
+    --border-color: rgba(185, 185, 185, 0.3);
+    --border-color-lighter: rgba(255, 255, 255);
+
+    --text-color: rgba(255, 255, 255);
 }
+
 
 .text-primary {
-    color: $primary-color-text !important;
-}
-
-.border-primary {
-    border-color: $primary-color !important;
-}
-
-.border-secondary {
-    border-color: white !important;
-}
-
-.active-link {
-    color: $primary-color-text !important;
-    font-weight: 900;
-    background-color: $primary-background-color-light;
+    color: var(--text-color) !important;
 }
 
 .btn {
     background-color: transparent !important;
-    color: white !important;
     border: 1px solid $primary-color !important;
 
     &:hover {
         background-color: rgba(255, 0, 255, .3) !important;
-        color: white !important;
     }
 }
 
 .btn-secondary {
     background-color: transparent !important;
-    border: 1px solid white !important;
-    color: white !important;
+    border: 1px solid var(--border-color-lighter) !important;
+    color: var(--text-color) !important;
 
     &:hover {
-        background-color: rgba(255, 255, 255, .3) !important;
-        color: white !important;
+        background-color: var(--hover-background-color) !important;
     }
+}
+
+.hover {
+    &:hover {
+        background-color: var(--hover-background-color) !important;
+    }
+}
+
+.nav-link {
+    &:hover {
+        background-color: var(--active-background-color);
+    }
+}
+
+.active-link {
+    font-weight: 900;
+    background-color: var(--active-background-color);
 }
 
 
@@ -62,7 +86,6 @@
     flex-direction: row !important;
     justify-content: center !important;
     width: 100%;
-    background-color: $primary-background-color-light !important;
 
     button {
         flex-grow: 1;
@@ -76,12 +99,7 @@
 }
 
 .p-tab-active {
-    color: $primary-color-text !important;
     border-color: $primary-color !important;
-}
-
-.p-tablist-active-bar {
-    background-color: $primary-color !important;
 }
 
 
@@ -96,7 +114,7 @@
 }
 
 .p-inputgroup{
-    border: 1px solid $primary-color-text;
+    border: 1px solid var(--border-color);
     width: 100%;
     
     &:has(.p-inputgroupaddon) .p-inputtext,
@@ -157,7 +175,8 @@
 }
 
 .p-select {
-    border: 1px solid $primary-color-text !important;
+    border: 1px solid var(--border-color) !important;
+    background-color: transparent !important;
 
     &:focus-within {
         border: 1px solid $primary-color !important;
