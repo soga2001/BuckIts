@@ -157,7 +157,7 @@ export default defineComponent({
                 <div class="absolute inset-0 flex items-center justify-center z-20">
                     <ProgressSpinner stroke-width="5px" animationDuration=".5s" style="width: 30px; height: 30px" v-if="loading" />
                 </div>
-                <Button class="btn z-10 !p-3" type="button" :loading="loading" @click="uploadAvatar">
+                <Button variant="outlined" class="z-10 !p-3" type="button" :loading="loading" @click="uploadAvatar">
                     Upload Avatar
                 </Button>
             </div>

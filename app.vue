@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute, type RouteLocationNormalized } from 'vue-router';
 import { useFetch } from 'nuxt/app';
 import type { User } from './assets/interface/user';
 import { useStore } from './stores/stores';
@@ -68,6 +68,14 @@ const closeRegisterModal = () => {
   }
 };
 
+const getPageKey = (route: RouteLocationNormalized): string => {
+  let temp = ''
+  for (const [key, value] of Object.entries(route.params)) {
+    temp += `${key}:${value}-`
+  }
+  return temp || route.fullPath;
+};
+
 onBeforeMount(() => {
   toggleDarkMode()
 })
@@ -85,17 +93,10 @@ onMounted(() => {
   window.addEventListener("resize", onResize, true)
 });
 
-watch(
-  () => route,
-  (value) => {
-    console.log('login', value);
-  }
-);
 
 watch(
   () => route.query.login,
   (value) => {
-    console.log('login', value);
     loginDialog.value = value === 'true';
   }
 );
@@ -103,24 +104,33 @@ watch(
 watch(
   () => route.query.register,
   (value) => {
-    console.log('register', value);
     registerModal.value = value === 'true';
   }
 );
 
 watch(
-  () => isMobile,
+  () => store.getError,
   (value) => {
-    mobile.value = value;
+    console.log('error', value);
+    if (value == "AuthSessionMissingError") {
+      router.push({ query: { login: 'true' } });
+    }
+    if (value == "AuthSessionExpiredError") {
+      router.push({ query: { login: 'true' } });
+    }
+    if (value == '') {
+      router.push({ query: {} });
+    }
   }
-);
+)
+
 
 </script>
 
 
 <template>
   <NuxtLayout :name="mobile ? 'mobile' : 'default'">
-    <NuxtPage :page-key="route => route.fullPath" :keepalive="{
+    <NuxtPage :page-key="getPageKey" :keepalive="{
       exclude: ['login', 'register'],
     }"/>
   </NuxtLayout>

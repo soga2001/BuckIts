@@ -10,6 +10,7 @@ export const useStore = defineStore({
       user: {} as User,
       desktop: true,
       dark: true,
+      error: '',
     }
   },
   actions: {
@@ -31,6 +32,9 @@ export const useStore = defineStore({
     },
     changeDevice(value: boolean) {
         this.desktop = value
+    },
+    changeError(value: string) {
+        this.error = value
     }
   },
   getters: {
@@ -38,6 +42,7 @@ export const useStore = defineStore({
     getUser: (state) => state.user,
     getUserMetaData: (state) => state.user.user_metadata,
     isDesktop: (state) => state.desktop,
-    getTheme: (state) => state.dark
+    getTheme: (state) => state.dark,
+    getError: (state) => state.error,
   },
 })

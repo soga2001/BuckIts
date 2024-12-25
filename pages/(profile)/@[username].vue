@@ -4,14 +4,12 @@ definePageMeta({
     name: "profile",
     dynamicLayout: false,
     keepalive: true,
-    key: "profile, user, user profile",
 })
 
 </script>
 
 <template>
     <NuxtLayout name="profile" v-slot="slotProps">
-        
         <NuxtPage v-if="slotProps.user.id" :username="$route.params.username"/>
         <div v-else class="flex flex-col items-center justify-center h-full">
             <div class="text-3xl font-bold">

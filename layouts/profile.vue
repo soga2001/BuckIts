@@ -18,6 +18,7 @@ export default defineComponent({
         return {
             route: useRoute(),
             toast: useToast(),
+            store: useStore(),
         }
     },
     methods: {
@@ -62,9 +63,7 @@ export default defineComponent({
                 }
             });
             if (error) {
-                if(error.name == 'AuthSessionMissingError') {
-                    this.$router.push({query: {login: 'true'}});
-                }
+                this.store.changeError(error.name);
             }
             else {
                 if (status == 200 && followed) {
@@ -211,18 +210,16 @@ export default defineComponent({
                 </div>
             </div>
             
-            <Tabs v-if="!loading && !error" :value="path" class="border-t dark:border-surface-700">
-                <TabList>
-                    <Tab :disabled="error" class="!p-0 !m-0 " v-for="tab in items" :key="tab.label" :value="tab.route">
-                        <NuxtLink class="grow " v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
-                            <a v-ripple :href="href" @click="navigate" class="flex items-center gap-2">
-                                <i class="material-icons">{{ tab.icon }}</i>
-                                <span>{{ tab.label }}</span>
-                            </a>
-                        </NuxtLink>
-                    </Tab>
-                </TabList>
-            </Tabs>
+            <div v-if="!loading && !error" class="flex flex-row w-full border-y dark:border-surface-700">
+                <NuxtLink :to="`/@${route.params.username}`" exact-active-class="active-tab" v-ripple class="tab grow flex items-center cursor-pointer p-4 justify-center">
+                    <i class="material-icons-round mr-2">checklist</i>
+                    <span>BuckIts</span>
+                </NuxtLink>
+                <NuxtLink :to="`/@${route.params.username}/media`" exact-active-class="active-tab" v-ripple class="tab grow flex items-center cursor-pointer p-4 justify-center">
+                    <i class="material-icons-round mr-2">image</i>
+                    <span>Media</span>
+                </NuxtLink>
+            </div>
         </div>
         <div v-if="!loading" class="mt-5">
             <slot :user="userProfile" />
@@ -231,6 +228,18 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
+
+.tab {
+    
+    &:hover {
+        background-color: var(--hover-background-color);
+    }
+
+    &.active-tab {
+        background-color: var(--active-background-color);
+        border-bottom: 1px inset var(--p-primary-color);
+    }
+}
 
 
 .follow-btn {

@@ -16,6 +16,7 @@
     --border-color-lighter: rgba(0,0,0);
 
     --text-color: rgba(0, 0, 0);
+    --text-color-secondary: rgb(42, 41, 41);
 }
 
 :root[class="my-app-dark"] { 
@@ -32,12 +33,19 @@
     --border-color-lighter: rgba(255, 255, 255);
 
     --text-color: rgba(255, 255, 255);
+    --text-color-secondary: rgb(213, 214, 214);
 }
 
 
 .text-primary {
     color: var(--text-color) !important;
 }
+
+.text-secondary {
+    color: var(--text-color-secondary) !important;
+}
+
+
 
 .btn {
     background-color: transparent !important;
