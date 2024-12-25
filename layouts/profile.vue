@@ -10,7 +10,6 @@ export default defineComponent({
             error: false,
             ssrLoading: true,
             loading: true,
-            route: useRoute(),
             following: false,
             hoveringOnFollow: false,
         }
@@ -24,7 +23,9 @@ export default defineComponent({
     methods: {
         async fetchSsr() {
             this.ssrLoading = true;
-            const { data } = await useFetch<{user: UserProfile, error: Error, status: Number}>(`/api/profile/${this.route.params.username}`);
+            const { data } = await useFetch<{user: UserProfile, error: Error, status: Number}>(`/api/profile/${this.route.params.username}`, {
+                key: `profile-${this.route.params.username}`,
+            });
             const {user, error, status} = data.value as {user: UserProfile | null, error: Error, status: number};
             if (error == null) {
                 this.userProfile = user as UserProfile;
@@ -38,13 +39,16 @@ export default defineComponent({
         async fetch() {
             this.loading = true;
             const { user, error, status } = await $fetch<{user: UserProfile, error: Error, status: Number}>(`/api/profile/${this.route.params.username}`);
-            // const {user, error, status} = data.value as {user: UserProfile | null, error: Error, status: number};
             if (error == null) {
                 this.userProfile = user as UserProfile;
                 this.error = false;
             }   
             else {
                 this.error = true;
+                throw createError({
+                    statusCode: 404,
+                    statusMessage: 'Page Not Found'
+                });
             }
             this.loading = false;
         },
@@ -81,25 +85,21 @@ export default defineComponent({
     mounted() {
         this.loading = false;
     },
-    activated() {
-        if(this.username != this.userProfile.username) this.fetch();
-    },
     watch: {
         userProfile() {
-            if (this.userProfile) {
+            if (this.userProfile.id) {
                 useHead({
                     titleTemplate: `${this.userProfile.full_name} | %s`,
                 })
             }
-            else {
+            
+        },
+        error() {
+            if (this.error) {
                 useHead({
                     titleTemplate: `Profile | User Not Found`,
                 })
             }
-            
-        },
-        '$route.params.username'(to, from) {
-            if (to != from && this.username != this.userProfile.username) this.fetch();
         }
     },
     computed: {
@@ -124,16 +124,16 @@ export default defineComponent({
 
 <template>
     <div class="w-full h-full">
-        <div v-if="!error && !loading" class="min-[1010px]:h-80 flex flex-col w-full">
-            <div v-if="!loading" class="py-5 min-[1010px]:px-10 min-[1200px]:px-20 min-[1010px]:py-5 flex flex-col min-[1010px]:flex-row justify-center max-[1010px]:items-center min-[1010px]:gap-20 h-full w-full">
+        <div class="min-[1010px]:h-80 flex flex-col w-full">
+            <div v-if="!loading && !error" class="py-5 min-[1010px]:px-10 min-[1200px]:px-20 min-[1010px]:py-5 flex flex-col min-[1010px]:flex-row justify-center max-[1010px]:items-center min-[1010px]:gap-20 h-full w-full">
                 <div class="">
                     <Image v-if="userProfile.avatar_url != ''" :src="userProfile.avatar_url" image-class="rounded-full" class="w-48 h-48 rounded-full border bg-black overflow-hidden" preview/>
-                    <Image v-else src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" preview/>
+                    <Image v-else src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" class="w-48 h-48 rounded-full border bg-black overflow-hidden" preview/>
                 </div>
                 <div class="flex flex-col max-[1010px]:items-center grow w-full gap-2">
                     <div class="text-3xl flex flex-col min-[1010px]:flex-row items-center gap-2 h-fit">
                         <span v-if="userProfile">{{ userProfile.full_name }}</span>
-                        <span v-if="!error" class="text-3xl hidden min-[1010px]:block ">&bull;</span>
+                        <span class="text-3xl hidden min-[1010px]:block ">&bull;</span>
                         <span class="text-lg">@{{ username }}</span>
                     </div>
                     <div class="flex flex-row gap-2" v-if="!userProfile.is_user">
@@ -171,7 +171,7 @@ export default defineComponent({
                 <div class="flex flex-col max-[1010px]:items-center grow w-full min-[1010px]:gap-5 gap-2">
                     <div class="flex flex-col min-[1010px]:flex-row items-center gap-2 h-fit">
                         <Skeleton width="10rem" height="2.4rem"></Skeleton>
-                        <span v-if="!error" class="text-3xl">&bull;</span>
+                        <Skeleton shape="circle" width="1rem" height="1rem"></Skeleton>
                         <span class="text-lg">@{{ username }}</span>
                     </div>
                     <div class="flex flex-row gap-2">
@@ -197,10 +197,23 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
+
+            <div v-if="!loading && error" class="py-5 min-[1010px]:px-10 min-[1200px]:px-20 min-[1010px]:py-5 flex flex-col min-[1010px]:flex-row justify-center max-[1010px]:items-center min-[1010px]:gap-20 h-full w-full">
+                <div class="">
+                    <Image v-if="userProfile.avatar_url != ''" :src="userProfile.avatar_url" image-class="rounded-full" class="w-48 h-48 rounded-full border bg-black overflow-hidden" preview/>
+                    <Image v-else src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" class="w-48 h-48 rounded-full border bg-black overflow-hidden" preview/>
+                </div>
+                <div class="flex flex-col max-[1010px]:items-center grow w-full gap-2">
+                    <div class="text-3xl flex flex-col min-[1010px]:flex-row items-center gap-2 h-fit">
+                        <span v-if="userProfile">{{ userProfile.full_name }}</span>
+                        <span class="text-lg">@{{ username }}</span>
+                    </div>
+                </div>
+            </div>
             
-            <Tabs v-if="!loading" :value="path" class="border-t dark:border-surface-700">
+            <Tabs v-if="!loading && !error" :value="path" class="border-t dark:border-surface-700">
                 <TabList>
-                    <Tab class="!p-0 !m-0 " v-for="tab in items" :key="tab.label" :value="tab.route">
+                    <Tab :disabled="error" class="!p-0 !m-0 " v-for="tab in items" :key="tab.label" :value="tab.route">
                         <NuxtLink class="grow " v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
                             <a v-ripple :href="href" @click="navigate" class="flex items-center gap-2">
                                 <i class="material-icons">{{ tab.icon }}</i>
@@ -211,26 +224,7 @@ export default defineComponent({
                 </TabList>
             </Tabs>
         </div>
-        <div v-if="error && !loading" class="flex flex-col w-full">
-            <div class="    h-80 w-full">
-                <div class="py-5 min-[1010px]:px-10 min-[1200px]:px-20 min-[1010px]:py-5 flex flex-col min-[1010px]:flex-row justify-center min-[1010px]:gap-20 gap-5 h-full w-full ">
-                    <div>
-                        <div class="bg-black border rounded-full w-48 h-48" alt="Image"> </div>
-                    </div>
-                    <div class="flex flex-col max-[1010px]:items-center grow w-full min-[1010px]:gap-5 ">
-                        <div class="text-3xl flex flex-row items-center gap-2 h-fit">
-                            <span class="text-lg">@{{ username }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p class="text-lg text-center font-black">This account doesn't exist.</p>
-                <p class="text-xs text-center">Try searching for another user.</p>
-            </div>
-        </div>
-
-        <div v-if="!loading && !error">
+        <div v-if="!loading" class="mt-5">
             <slot :user="userProfile" />
         </div>
     </div>

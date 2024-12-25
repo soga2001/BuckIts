@@ -26,6 +26,7 @@ const route = useRoute();
 
 const loginDialog = ref(false);
 const registerModal = ref(false);
+const mobile = ref(isMobile);
 
 const getUser = async () => {
   const { data: value } = await useFetch<{ user: User | null; error: string | null }>(
@@ -43,6 +44,10 @@ getUser();
 const toggleDarkMode = () => {
   document.documentElement.classList.toggle('my-app-dark');
   store.toggleDark();
+};
+
+const onResize = () => {
+  mobile.value = window.innerWidth <= 768;
 };
 
 const closeLoginDialog = () => {
@@ -63,11 +68,6 @@ const closeRegisterModal = () => {
   }
 };
 
-const layout = computed(() => {
-  const temp = isMobile ? 'mobile' : 'default';
-  return route.meta.layout == false ? false : temp;
-});
-
 onBeforeMount(() => {
   toggleDarkMode()
 })
@@ -81,8 +81,16 @@ onMounted(() => {
       registerModal.value = route.query.register === 'true';
     }
   }
+
+  window.addEventListener("resize", onResize, true)
 });
 
+watch(
+  () => route,
+  (value) => {
+    console.log('login', value);
+  }
+);
 
 watch(
   () => route.query.login,
@@ -99,12 +107,20 @@ watch(
     registerModal.value = value === 'true';
   }
 );
+
+watch(
+  () => isMobile,
+  (value) => {
+    mobile.value = value;
+  }
+);
+
 </script>
 
 
 <template>
-  <NuxtLayout :name="isMobile ? 'mobile' : 'default'">
-    <NuxtPage :keepalive="{
+  <NuxtLayout :name="mobile ? 'mobile' : 'default'">
+    <NuxtPage :page-key="route => route.fullPath" :keepalive="{
       exclude: ['login', 'register'],
     }"/>
   </NuxtLayout>
