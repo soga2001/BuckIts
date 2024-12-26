@@ -87,9 +87,23 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
   SUPABASE_URL=<project_url>
   ```
 - Go to `SQL Editor` on the left vertical navbar
-- Create tables and triggers
-  - Paste `user_profile.sql` from `/database` directory into the editor and run
-  - Paste `follow_table.sql` from `/database` directory into the editor and run
+- Create tables, triggers, and functions from `/database/` directory. Paste the sql from the following files into the editor and run
+  - `user_profile.sql` - Creates user profile on sign up. When user is created, username has to be assigned as well
+  - `follow_table.sql` - Creates follow tables, functions, triggers.
+    - Function to increase follower/following count
+    - Function to decrease follower/following count
+    - Triggers that are triggered when row gets inserted/deleted from the follow table and increases/decreases follower/following count
+  - `get_user_profile.sql` - Creates a function that returns 
+    - user info - id, username, full_name, etc
+    - is_following - Indicates whether the current user follows this user
+    - is_follower - Indicates whether this user follows the current user
+    - is_owner - Indicates whether the current user is the same as this user
+  - `sessions.sql` - Grants permissions, creates rls policies, and create functions
+    - Grants authenticated user permission to select and delete sessions
+    - Creates rls policy to select sessions when user is authenticated and session.user_id and user id is the same
+    - Creates rls policy to delete sessions when user is authenticated and session.user_id and user id is the same and passed session id is the same as session.id
+    - Creates a function to delete a single session when user is authenticated and session.user_id and user id is the same and passed session id is the same as session.id
+    - Creates a function to get all the user's session when user is authenticated and session.user_id and user id is the same
 
 
 ### Generate Supabase Database types ###
