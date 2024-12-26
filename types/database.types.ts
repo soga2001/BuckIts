@@ -12,20 +12,20 @@ export type Database = {
       follow: {
         Row: {
           created_at: string | null
-          followed_user: string | null
-          following_user: string | null
+          followed_user: string
+          following_user: string
           id: string
         }
         Insert: {
           created_at?: string | null
-          followed_user?: string | null
-          following_user?: string | null
+          followed_user: string
+          following_user: string
           id?: string
         }
         Update: {
           created_at?: string | null
-          followed_user?: string | null
-          following_user?: string | null
+          followed_user?: string
+          following_user?: string
           id?: string
         }
         Relationships: [
@@ -99,46 +99,63 @@ export type Database = {
         }
         Relationships: []
       }
+      sessions: {
+        Row: {
+          id: string
+          user_id: string
+        }
+        Insert: {
+          id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      get_user_profile:
-        | {
-            Args: {
-              u: string
-            }
-            Returns: {
-              id: string
-              username: string
-              full_name: string
-            }[]
-          }
-        | {
-            Args: {
-              u: string
-              v?: string
-            }
-            Returns: {
-              id: string
-              username: string
-              full_name: string
-              bio: string
-              avatar_url: string
-              website: string
-              location: string
-              dob: string
-              followers: number
-              following: number
-              created_at: string
-              private: boolean
-              verified: boolean
-              is_following: boolean
-              is_follower: boolean
-              is_user: boolean
-            }[]
-          }
+      delete_session: {
+        Args: {
+          session_id: string
+        }
+        Returns: unknown[]
+      }
+      get_sessions: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          user_id: string
+          ip: unknown
+        }[]
+      }
+      get_user_profile: {
+        Args: {
+          u: string
+        }
+        Returns: {
+          id: string
+          username: string
+          full_name: string
+          bio: string
+          avatar_url: string
+          website: string
+          location: string
+          dob: string
+          followers: number
+          following: number
+          created_at: string
+          private: boolean
+          verified: boolean
+          is_following: boolean
+          is_follower: boolean
+          is_user: boolean
+        }[]
+      }
       search_users: {
         Args: {
           u: string
