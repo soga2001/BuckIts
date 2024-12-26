@@ -19,8 +19,8 @@ export default defineComponent({
     setup() {
         const store = useStore()
         const supabase = useSupabaseClient()
-        const route = useRouter()
-        return { store, supabase, route}
+        const router = useRouter()
+        return { store, supabase, route: router}
     },
     methods: {
         async submitOTP() {

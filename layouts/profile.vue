@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { UserProfile } from '~/assets/interface/user';
-import EditProfile from '~/components/EditProfile.vue';
+import EditProfile from '~/components/buttons/EditProfile.vue';
+import FollowButton from '~/components/buttons/FollowButton.vue';
 import { useToast } from 'primevue/usetoast';
 
 export default defineComponent({
@@ -37,52 +38,22 @@ export default defineComponent({
             }
             this.ssrLoading = false;
         },
-        async fetch() {
-            this.loading = true;
-            const { user, error, status } = await $fetch<{user: UserProfile, error: Error, status: Number}>(`/api/profile/${this.route.params.username}`);
-            if (error == null) {
-                this.userProfile = user as UserProfile;
-                this.error = false;
-            }   
-            else {
-                this.error = true;
-                throw createError({
-                    statusCode: 404,
-                    statusMessage: 'Page Not Found'
-                });
+        async followUser(payload: {status: number, followed: boolean}) {
+            const { status, followed } = payload;
+            if (status == 200 && followed) {
+                this.userProfile.is_following = followed;
+                this.userProfile.followers += 1;
+            } else if(status == 200 && !followed) {
+                this.userProfile.is_following = followed;
+                this.userProfile.followers -= 1;
             }
-            this.loading = false;
-        },
-        async followUser() {
-            this.following = true;
-            const { status, followed, error } = await $fetch<{status: Number, followed: boolean, error: any}>(`/api/profile/follow/`, {
-                method: 'POST',
-                body: { 
-                    is_following: this.userProfile.is_following,
-                    id: this.userProfile.id,
-                }
-            });
-            if (error) {
-                this.store.changeError(error.name);
-            }
-            else {
-                if (status == 200 && followed) {
-                    this.userProfile.is_following = followed;
-                    this.userProfile.followers += 1;
-                } else if(status == 200 && !followed) {
-                    this.userProfile.is_following = followed;
-                    this.userProfile.followers -= 1;
-                }
-            }
-            this.following = false;
-
         }
     },
     created() {
+        console.log('here')
         this.fetchSsr();
     },
     mounted() {
-        this.loading = false;
     },
     watch: {
         userProfile() {
@@ -98,6 +69,11 @@ export default defineComponent({
                 useHead({
                     titleTemplate: `Profile | User Not Found`,
                 })
+            }
+        },
+        ssrLoading() {
+            if (!this.ssrLoading) {
+                this.loading = false;
             }
         }
     },
@@ -116,7 +92,8 @@ export default defineComponent({
         }
     },
     components: {
-        EditProfile
+        EditProfile,
+        FollowButton,
     }
 })
 </script>
@@ -136,11 +113,7 @@ export default defineComponent({
                         <span class="text-lg">@{{ username }}</span>
                     </div>
                     <div class="flex flex-row gap-2" v-if="!userProfile.is_user">
-                        <Button @mouseover="hoveringOnFollow = true" @mouseleave="hoveringOnFollow = false" class="follow-btn" variant="outlined"  :class="{ 'following': userProfile.is_following}" :loading="following"  @click="followUser">
-                            <span  v-if="!userProfile.is_following " class="material-icons-outlined">person_add_alt</span>
-                            <span v-else-if="hoveringOnFollow" class="material-icons-outlined">person_remove</span>
-                            <span v-else class="material-icons-outlined">how_to_reg</span>
-                        </Button>
+                        <FollowButton @follow="followUser" :user-profile="userProfile" />
                         <Button class="btn-secondary !px-6" label="Message" icon="pi pi-comment" />
                     </div>
                     <div class="flex flex-row gap-2" v-if="userProfile.is_user">

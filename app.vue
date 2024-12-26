@@ -50,9 +50,28 @@ const onResize = () => {
   mobile.value = window.innerWidth <= 971;
 };
 
-const closeLoginDialog = () => {
+const openLoginDialog = (value: string) => {
+  if(store.isAuthenticated) {
+    router.push({ query: {} });
+  }
+  else {
+    loginDialog.value = value === 'true';
+  }
+}
+
+const openRegisterModal = (value: string) => {
+  if(store.isAuthenticated) {
+    router.push({ query: {} });
+  }
+  else {
+    registerModal.value = value === 'true';
+  }
+}
+
+const closeLoginModal = () => {
   loginDialog.value = false;
   if (route.query && route.query.login) {
+    store.changeError('');
     router.push({});
   } else {
     router.push({ query: route.query });
@@ -62,6 +81,7 @@ const closeLoginDialog = () => {
 const closeRegisterModal = () => {
   registerModal.value = false;
   if (route.query && route.query.register) {
+    store.changeError('');
     router.push({});
   } else {
     router.push({ query: route.query });
@@ -82,12 +102,8 @@ onBeforeMount(() => {
 
 onMounted(() => {
   if (route.query) {
-    if (route.query.login) {
-      loginDialog.value = route.query.login === 'true';
-    }
-    if (route.query.register) {
-      registerModal.value = route.query.register === 'true';
-    }
+    openLoginDialog(route.query.login as string);
+    openRegisterModal(route.query.register as string);
   }
 
   window.addEventListener("resize", onResize, true)
@@ -95,16 +111,28 @@ onMounted(() => {
 
 
 watch(
+  () => mobile,
+  (value) => {
+    if (value) {
+      
+    }
+    else {
+      setPageLayout('default');
+    }
+  }
+)
+
+watch(
   () => route.query.login,
   (value) => {
-    loginDialog.value = value === 'true';
+    openLoginDialog(value as string);
   }
 );
 
 watch(
   () => route.query.register,
   (value) => {
-    registerModal.value = value === 'true';
+    openRegisterModal(value as string);
   }
 );
 
@@ -130,11 +158,9 @@ watch(
 
 <template>
   <NuxtLayout :name="mobile ? 'mobile' : 'default'">
-    <NuxtPage :page-key="getPageKey" :keepalive="{
-      exclude: ['login', 'register'],
-    }"/>
+    <NuxtPage :page-key="getPageKey" keepalive/>
   </NuxtLayout>
-  <Dialog v-model:visible="loginDialog" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeLoginDialog" :style="{ maxWidth: '50rem' }">
+  <Dialog v-model:visible="loginDialog" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeLoginModal" :style="{ maxWidth: '50rem' }">
       <LoginComponent />
   </Dialog>
   <Dialog v-model:visible="registerModal" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeRegisterModal" :style="{ maxWidth: '50rem' }">

@@ -1,5 +1,5 @@
 <script lang="ts">
-import UploadAvatar from './registration/UploadAvatar.vue';
+import UploadAvatar from '../registration/UploadAvatar.vue';
 
 export default defineComponent({
     data() {

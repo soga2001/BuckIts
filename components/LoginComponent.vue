@@ -44,6 +44,12 @@ export default defineComponent({
         } else {
             this.store.setUser(response.data.user)
             this.store.changeAuthenticated(true)
+            if(this.$route.query.redirect) {
+              console.log('here')
+                this.$router.push({path: this.$route.query.redirect as string, query: {}}).then(() => {
+                    reloadNuxtApp()
+                })
+            } 
             this.$route.query.login ? this.$router.push({query: {}}).then(() => {
                 reloadNuxtApp()
             }) : this.$router.push('/').then(() => {
@@ -104,7 +110,7 @@ export default defineComponent({
             </div>
             <p class="flex justify-center items-center">
                 Don't have an account? 
-                <Button variant="text" as="router-link" class="hover:!bg-transparent hover:underline" :to="isModal ? {query: {register: 'true'}} : '/register'">Sign up</Button>
+                <Button variant="text" as="router-link" class="hover:!bg-transparent hover:underline" :to="isModal ? {query: {register: 'true', redirect: route.query.redirect}} : '/register'">Sign up</Button>
             </p>
 
             <div class="separator p-5">
