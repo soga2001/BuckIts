@@ -47,7 +47,7 @@ const toggleDarkMode = () => {
 };
 
 const onResize = () => {
-  mobile.value = window.innerWidth <= 768;
+  mobile.value = window.innerWidth <= 971;
 };
 
 const closeLoginDialog = () => {

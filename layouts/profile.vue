@@ -210,7 +210,7 @@ export default defineComponent({
                 </div>
             </div>
             
-            <div v-if="!loading && !error" class="flex flex-row w-full border-y dark:border-surface-700">
+            <div v-if="!loading && !error" class="flex flex-row w-full tabs">
                 <NuxtLink :to="`/@${route.params.username}`" exact-active-class="active-tab" v-ripple class="tab grow flex items-center cursor-pointer p-4 justify-center">
                     <i class="material-icons-round mr-2">checklist</i>
                     <span>BuckIts</span>
@@ -229,15 +229,32 @@ export default defineComponent({
 
 <style lang="scss">
 
+.tabs {
+    border-top : 1px solid var(--border-color);
+}
+
 .tab {
-    
+    border-bottom : 1px solid var(--border-color);
+
     &:hover {
         background-color: var(--hover-background-color);
     }
 
     &.active-tab {
         background-color: var(--active-background-color);
-        border-bottom: 1px inset var(--p-primary-color);
+        border-bottom: 3px inset var(--p-primary-color);
+        font-weight: 900;
+        color: var(--text-color);
+        // position: relative;
+        // &:after {
+        //     content: "";
+        //     background: $primary-color;
+        //     position: absolute;
+        //     bottom: 0;
+        //     width: 20%;
+        //     height: 3px;
+        //     border-radius: 5px 5px 0 0;
+        // }
     }
 }
 

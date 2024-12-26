@@ -1,88 +1,6 @@
-<template>
-    <div class="card flex justify-center">
-        <Button variant="outlined"  @click="visible=true" label="Edit Profile" icon="pi pi-user-edit" />
-        <Dialog v-model:visible="visible"  modal header="Edit Profile" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-            <div class="flex flex-col gap-2">
-                <div class="flex flex-col gap-1">
-                    <div class="flex-column">
-                        <label>Full Name </label>
-                    </div>
-
-                    <InputGroup class="input-group">
-                        <InputGroupAddon class="input-addon">
-                            <i class="material-icons">person</i>
-                        </InputGroupAddon>
-                        <InputText class="input" type="text" v-model="fullname" placeholder="Enter full name" />
-                    </InputGroup>
-                </div>
-
-                <div class="flex flex-col gap-1">            
-                    <div class="flex-column">
-                        <label>Email </label>
-                    </div>
-
-                    <InputGroup class="input-group">
-                        <InputGroupAddon class="input-addon">
-                            <i class="material-icons">mail</i>
-                        </InputGroupAddon>
-                        <InputText class="input" type="text" v-model="email" placeholder="Enter email" />
-                    </InputGroup>
-                </div>
-                <div class="flex flex-col gap-1">
-                    <div class="flex-column">
-                        <label>Date Of Birth</label>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-2">
-                    <div class="flex flex-col gap-2">
-                        <span class="text-sm">Month</span>
-                        <div class="custom-select">
-                        <Select v-model="month" :options="monthsList" checkmark placeholder="Month" class="w-full">
-                            <template #optiongroup="slotProps">
-                                <div class="flex items-center">
-                                    {{ slotProps }}
-                                </div>
-                            </template>
-                        </Select>
-                        </div>
-
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <span class="text-sm">Day</span>
-                        <div class="custom-select">
-                        <Select :default-value="computedDay" v-model="day" :options="dayList" checkmark placeholder="Day" class="w-full">
-                            <template #optiongroup="slotProps">
-                                <div class="flex items-center">
-                                    {{ slotProps }}
-                                </div>
-                            </template>
-                        </Select>
-
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <span class="text-sm">Year</span>
-                        <div class="custom-select">
-                        <Select :default-value="computedYear" v-model="year" :options="yearList" checkmark placeholder="Year" class="w-full dob-select">
-                            <template #optiongroup="slotProps">
-                                <div class="flex items-center">
-                                    {{ slotProps }}
-                                </div>
-                            </template>
-                        </Select>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-            </div>
-        </Dialog>
-    </div>
-</template>
-
 <script lang="ts">
+import UploadAvatar from './registration/UploadAvatar.vue';
+
 export default defineComponent({
     data() {
         return {
@@ -196,7 +114,95 @@ export default defineComponent({
         computedDay() {
             return typeof this.day === 'string' ? parseInt(this.day) : this.day;
         }
+    },
+    components: {
+        UploadAvatar
     }
-    
 });
 </script>
+
+<template>
+    <div class="card flex justify-center">
+        <Button variant="outlined"  @click="visible=true" label="Edit Profile" icon="pi pi-user-edit" />
+        <Dialog v-model:visible="visible"  modal header="Edit Profile" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <div class="flex flex-col gap-2">
+                <UploadAvatar />
+                <div class="flex flex-col gap-1">
+                    <div class="flex-column">
+                        <label>Full Name </label>
+                    </div>
+
+                    <InputGroup class="input-group">
+                        <InputGroupAddon class="input-addon">
+                            <i class="material-icons">person</i>
+                        </InputGroupAddon>
+                        <InputText class="input" type="text" v-model="fullname" placeholder="Enter full name" />
+                    </InputGroup>
+                </div>
+
+                <div class="flex flex-col gap-1">            
+                    <div class="flex-column">
+                        <label>Email </label>
+                    </div>
+
+                    <InputGroup class="input-group">
+                        <InputGroupAddon class="input-addon">
+                            <i class="material-icons">mail</i>
+                        </InputGroupAddon>
+                        <InputText class="input" type="text" v-model="email" placeholder="Enter email" />
+                    </InputGroup>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <div class="flex-column">
+                        <label>Date Of Birth</label>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                    <div class="flex flex-col gap-2">
+                        <span class="text-sm">Month</span>
+                        <div class="custom-select">
+                        <Select v-model="month" :options="monthsList" checkmark placeholder="Month" class="w-full">
+                            <template #optiongroup="slotProps">
+                                <div class="flex items-center">
+                                    {{ slotProps }}
+                                </div>
+                            </template>
+                        </Select>
+                        </div>
+
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <span class="text-sm">Day</span>
+                        <div class="custom-select">
+                        <Select :default-value="computedDay" v-model="day" :options="dayList" checkmark placeholder="Day" class="w-full">
+                            <template #optiongroup="slotProps">
+                                <div class="flex items-center">
+                                    {{ slotProps }}
+                                </div>
+                            </template>
+                        </Select>
+
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <span class="text-sm">Year</span>
+                        <div class="custom-select">
+                        <Select :default-value="computedYear" v-model="year" :options="yearList" checkmark placeholder="Year" class="w-full dob-select">
+                            <template #optiongroup="slotProps">
+                                <div class="flex items-center">
+                                    {{ slotProps }}
+                                </div>
+                            </template>
+                        </Select>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </Dialog>
+    </div>
+</template>
+

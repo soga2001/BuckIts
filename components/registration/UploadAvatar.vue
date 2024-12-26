@@ -152,15 +152,9 @@ export default defineComponent({
                 </div>
             </template>
         </FileUpload>
-        <div class="flex justify-center mt-8 self-stretch">
-            <div class="relative w-fit cursor-pointer" @click="uploadAvatar">
-                <div class="absolute inset-0 flex items-center justify-center z-20">
-                    <ProgressSpinner stroke-width="5px" animationDuration=".5s" style="width: 30px; height: 30px" v-if="loading" />
-                </div>
-                <Button variant="outlined" class="z-10 !p-3" type="button" :loading="loading" @click="uploadAvatar">
-                    Upload Avatar
-                </Button>
-            </div>
+
+        <div class="flex justify-center mt-5 self-stretch">
+            <Button variant="outlined" type="button" label="Upload Avatar" :loading="loading" @click="uploadAvatar" />
         </div>
     </div>
 </template>
