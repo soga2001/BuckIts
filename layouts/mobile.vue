@@ -30,8 +30,8 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex flex-col h-dvh w-full max-w-dvw overflow-hidden" :style="{marginBottom: '56px', marginTop: '56px'}">
-        <Toolbar class="fixed w-full top-0 !p-2 !rounded-none !border-none z-10">
+    <div class="flex flex-col !h-dvh w-full max-w-dvw overflow-y-hidden">
+        <Toolbar class="fixed w-full top-0 !p-2 bg !rounded-none !border-none z-10">
             <template #start>
                 <div class="flex items-center gap-2">
                     <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
@@ -49,28 +49,29 @@ export default defineComponent({
                 </div>
             </template>
         </Toolbar>
-        <div class="text-wrap px-2">
+        <div class="text-wrap overflow-y-auto" :style="{marginBottom: '56px', marginTop: '56px'}">
             <slot />
         </div>
+        <div ref="bottomNav" class="bottom-nav flex flex-row tabs w-full bg fixed bottom-0 border-none shadow-2xl border-t border-surface-200 dark:border-surface-800 z-10">
+            <NuxtLink to="/home" active-class="active" v-ripple class="tab grow flex items-center py-2 justify-center">
+                <i class="default-icon material-icons-outlined !text-xl">cottage</i>
+                <i class="active-icon material-icons-round !text-xl">cottage</i>
+            </NuxtLink>
+            <NuxtLink :to="`/@${store.getUser.user_metadata?.username}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
+                <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
+                <i class="active-icon material-icons-round !text-xl">account_circle</i>
+            </NuxtLink>
+            <NuxtLink :to="`/@${store.getUser.user_metadata?.id}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
+                <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
+                <i class="active-icon material-icons-round !text-xl">account_circle</i>
+            </NuxtLink>
+            <NuxtLink :to="`/@${store.getUser.user_metadata?.full_name}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
+                <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
+                <i class="active-icon material-icons-round !text-xl">account_circle</i>
+            </NuxtLink>
+        </div>
     </div>
-    <div ref="bottomNav" class="bottom-nav flex flex-row tabs w-full bg fixed bottom-0 border-none shadow-2xl border-t border-surface-200 dark:border-surface-800 z-10">
-        <NuxtLink to="/home" active-class="active" v-ripple class="tab grow flex items-center py-2 justify-center">
-            <i class="default-icon material-icons-outlined !text-xl">cottage</i>
-            <i class="active-icon material-icons-round !text-xl">cottage</i>
-        </NuxtLink>
-        <NuxtLink :to="`/@${store.getUser.user_metadata?.username}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
-            <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
-            <i class="active-icon material-icons-round !text-xl">account_circle</i>
-        </NuxtLink>
-        <NuxtLink :to="`/@${store.getUser.user_metadata?.id}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
-            <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
-            <i class="active-icon material-icons-round !text-xl">account_circle</i>
-        </NuxtLink>
-        <NuxtLink :to="`/@${store.getUser.user_metadata?.full_name}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
-            <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
-            <i class="active-icon material-icons-round !text-xl">account_circle</i>
-        </NuxtLink>
-    </div>
+    
 </template>
 
 <style scoped lang="scss">
