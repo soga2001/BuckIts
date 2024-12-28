@@ -174,8 +174,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <Stepper :linear="true" v-model:value="activeStep" class="overflow-hidden pt-2 min-[1010px]:p-5">
-      <StepList>
+  <Stepper :linear="true" v-model:value="activeStep" class="relative pt-2 min-[1010px]:p-5 bg">
+      <StepList class="fixed right-0 left-0 px-2 w-full">
           <Step linear v-slot="{value}" asChild :value="1">
               <div class="flex flex-row flex-auto gap-2">
                   <button v-tooltip="'Login Information'" id="account-info" class=" border-0 inline-flex flex-col gap-2">
@@ -242,7 +242,7 @@ export default defineComponent({
           </Step>
       </StepList>
       
-      <StepPanels class="w-full overflow-y-auto">
+      <StepPanels class="w-full mt-5">
           <StepPanel :value="1" class="!bg-transparent ">
               <div class="flex w-full flex-col gap-1 mx-auto mt-5" style=" max-width: 600px">
 
@@ -331,7 +331,9 @@ export default defineComponent({
 
 .activeStep {
   background-color: $primary-color-active !important; 
-  color: $primary-color-text !important;
+  color: var(--text-color) !important;
+
+
 
 }
 

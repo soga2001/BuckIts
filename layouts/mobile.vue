@@ -30,34 +30,89 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex flex-col h-dvh w-full max-w-dvw overflow-x-hidden">
-        <div class="sticky top-0 flex-none border-b border-surface-200 dark:border-surface-800">
-            Hello
-        </div>
-        <div class="grow h-dvh">
+    <div class="flex flex-col h-dvh w-full max-w-dvw overflow-hidden" :style="{marginBottom: '56px', marginTop: '56px'}">
+        <Toolbar class="fixed w-full top-0 !p-2 !rounded-none !border-none z-10">
+            <template #start>
+                <div class="flex items-center gap-2">
+                    <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
+                </div>
+            </template>
+
+            <template #center>
+                <div v-if="$route.name" class="flex items-center gap-2 capitalize font-black text-xl">{{ $route.name }}</div>
+                <span v-else class="font-normal text-xl">Buck<span class="font-black">IT</span></span>
+            </template>
+
+            <template #end>
+                <div class="flex items-center gap-2">
+                    <ThemeButton />
+                </div>
+            </template>
+        </Toolbar>
+        <div class="text-wrap px-2">
             <slot />
         </div>
-        <div class="flex-none border-t border-surface-200 dark:border-surface-800 w-full">
-            <Tabs :value="path" class="w-full fixed bottom-0">
-                <TabList>
-                    <Tab class="!p-0 !m-0" v-for="tab in items" :key="tab.label" :value="tab.route">
-                        <router-link class="grow " v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
-                            <a v-ripple :href="href" @click="navigate" class="flex items-center gap-2">
-                                <i class="material-icons">{{ tab.icon }}</i>
-                            </a>
-                        </router-link>
-                    </Tab>
-                </TabList>
-            </Tabs>
-        </div>
+    </div>
+    <div ref="bottomNav" class="bottom-nav flex flex-row tabs w-full bg fixed bottom-0 border-none shadow-2xl border-t border-surface-200 dark:border-surface-800 z-10">
+        <NuxtLink to="/home" active-class="active" v-ripple class="tab grow flex items-center py-2 justify-center">
+            <i class="default-icon material-icons-outlined !text-xl">cottage</i>
+            <i class="active-icon material-icons-round !text-xl">cottage</i>
+        </NuxtLink>
+        <NuxtLink :to="`/@${store.getUser.user_metadata?.username}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
+            <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
+            <i class="active-icon material-icons-round !text-xl">account_circle</i>
+        </NuxtLink>
+        <NuxtLink :to="`/@${store.getUser.user_metadata?.id}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
+            <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
+            <i class="active-icon material-icons-round !text-xl">account_circle</i>
+        </NuxtLink>
+        <NuxtLink :to="`/@${store.getUser.user_metadata?.full_name}`" active-class="active" v-ripple class="tab grow flex items-center justify-center">
+            <i class="default-icon material-icons-outlined !text-xl">account_circle</i>
+            <i class="active-icon material-icons-round !text-xl">account_circle</i>
+        </NuxtLink>
     </div>
 </template>
 
 <style scoped lang="scss">
-.active-tab {
-    color: $primary-color;
-    border-top: 3px inset $primary-color;
-    background-color: $primary-background-color-light;
+
+a {
+    border: none;
+}
+
+.bottom-nav {
+    .active {
+        border: none;
+        // border-top: 3px inset $primary-color !important;
+
+        .active-icon {
+            display: block !important;
+        }
+
+        .default-icon {
+            display: none !important;
+        }
+
+        position: relative;
+        &:after {
+            content: "";
+            background: $primary-color;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 3px;
+            border-radius: 0 0 5px 5px;
+        }
+    }
+
+    a {
+        .active-icon {
+            display: block !important;
+        }
+
+        .default-icon {
+            display: none !important;
+        }
+    }
 }
 
 </style>

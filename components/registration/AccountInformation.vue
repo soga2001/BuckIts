@@ -1,7 +1,6 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue'
-import { useStore } from '~/stores/stores';
 
 export default defineComponent({
   props: {
@@ -31,7 +30,6 @@ export default defineComponent({
       }
   },
   methods: {
-
   },
   watch: {
     email() {
@@ -47,6 +45,11 @@ export default defineComponent({
   computed: {
     isModal() {
       return this.$route.query.register === 'true'
+    },
+    replaceUrl() {
+      const query = Object.assign({}, this.$route.query);
+      delete query.register;
+      return { query: {login: 'true', ...query} };
     }
   },
 })
@@ -108,7 +111,7 @@ export default defineComponent({
         
 
             <p class="flex items-center">Already have an account? 
-              <Button as="router-link" class="!bg-transparent text-primary !border-none hover:underline" :to="isModal ? {query: {login: true}} : '/login'">Sign in</Button>
+              <Button as="router-link" class="!bg-transparent text-primary !border-none hover:underline" :to="replaceUrl">Sign in</Button>
             </p>
           </div>
       </form>

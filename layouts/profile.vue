@@ -218,16 +218,6 @@ export default defineComponent({
         border-bottom: 3px inset var(--p-primary-color);
         font-weight: 900;
         color: var(--text-color);
-        // position: relative;
-        // &:after {
-        //     content: "";
-        //     background: $primary-color;
-        //     position: absolute;
-        //     bottom: 0;
-        //     width: 20%;
-        //     height: 3px;
-        //     border-radius: 5px 5px 0 0;
-        // }
     }
 }
 

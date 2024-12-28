@@ -11,21 +11,20 @@ definePageMeta({
 <template>
     <div class="w-full h-dvh grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-center">
         <div class="flex flex-col items-center gap-4">
-            <h1 class="text-4xl font-bold">Welcome to BuckIT</h1>
-            <p class="text-lg">Please login to continue</p>
+            <h1 class=" font-light text-8xl">Buck<span class="font-black">IT</span></h1>
         </div>
-        <div class="flex flex-col items-center gap-4">
-        <Button class="btn-secondary google w-80 rounded-full">
+        <div class="flex flex-col px-10 justify-start gap-4">
+        <Button class="btn-secondary-fill google w-80 rounded-full font-black">
               <span class="pi pi-google"></span>
-              Google 
+              Sign up with Google 
           </Button>
-          <Button class="btn-secondary apple w-80 rounded-full">
+          <Button class="btn-secondary-fill apple w-80 rounded-full font-black">
               <span class="pi pi-apple"></span>
-              Apple 
+              Sign up with Apple 
           </Button>
           - OR -
-          <Button class="w-80" variant="outlined" label="Login" @click="$router.push({path: '/', query: {login: 'true'}, replace: true})"/>
-          <Button as="router-link" class="btn-secondary w-80" label="Register" :to="{path: '/', query: {register: 'true'}, replace: true}" />
+          <h3 class="text-left">Already have an account?</h3>
+          <Button class="w-80" variant="outlined" label="Sign in" @click="$router.push({path: '/', query: {login: 'true'}, replace: true})"/>
         </div>
     </div>
 </template>

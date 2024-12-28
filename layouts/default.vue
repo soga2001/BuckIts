@@ -20,11 +20,11 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="h-dvh w-full  flex flex-row">
-      <div class="shrink border-r border-surface-100 dark:border-surface-700 w-full max-w-80">
+    <div class="h-dvh w-full grid grid-cols-[80px_1fr] min-[1101px]:grid-cols-[300px_minmax(900px,_1fr)]">
+      <div class="border-r border-surface-100 dark:border-surface-700 w-full">
           <navbar />
       </div>
-      <div class="grow" > 
+      <div  > 
           <slot /> 
       </div>
     </div>

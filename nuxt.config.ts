@@ -10,6 +10,14 @@ export default defineNuxtConfig({
   app: {
     keepalive: true,
   },
+  routeRules:{
+    "/login": {
+      redirect: "/?login=true"
+    },
+    "/register": {
+      redirect: "/?register=true"
+    }
+  },
   modules: [
     '@nuxtjs/supabase',
     '@nuxtjs/tailwindcss',

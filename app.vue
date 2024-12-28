@@ -26,7 +26,6 @@ const route = useRoute();
 
 const loginDialog = ref(false);
 const registerModal = ref(false);
-const mobile = ref(isMobile);
 
 const getUser = async () => {
   const { data: value } = await useFetch<{ user: User | null; error: string | null }>(
@@ -44,10 +43,6 @@ getUser();
 const toggleDarkMode = () => {
   document.documentElement.classList.toggle('my-app-dark');
   store.toggleDark();
-};
-
-const onResize = () => {
-  mobile.value = window.innerWidth <= 971;
 };
 
 const openLoginDialog = (value: string) => {
@@ -105,22 +100,20 @@ onMounted(() => {
     openLoginDialog(route.query.login as string);
     openRegisterModal(route.query.register as string);
   }
-
-  window.addEventListener("resize", onResize, true)
 });
 
 
 watch(
-  () => mobile,
+  () => store.isAuthenticated,
   (value) => {
     if (value) {
-      
-    }
+      router.push({ query: {} });
+    } 
     else {
-      setPageLayout('default');
+      router.push({ path: '/' });
     }
   }
-)
+);
 
 watch(
   () => route.query.login,
@@ -152,19 +145,38 @@ watch(
   }
 )
 
-
 </script>
 
 
 <template>
-  <NuxtLayout :name="mobile ? 'mobile' : 'default'">
+  <NuxtLayout>
     <NuxtPage :page-key="getPageKey" keepalive/>
   </NuxtLayout>
-  <Dialog v-model:visible="loginDialog" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeLoginModal" :style="{ maxWidth: '50rem' }">
-      <LoginComponent />
+  <Dialog :class="{'p-dialog-maximized': isMobile}" :draggable="false" :closeable="false" v-model:visible="loginDialog" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeLoginModal" :style="{ maxWidth: '50rem' }">
+    <template #header>
+      <div class="w-full flex justify-center items-center gap-2">
+        <div class="text-2xl font-normal">
+          <h1>Login to your Buck<span class="font-black">IT</span> account</h1>
+        </div>
+      </div>
+    </template>
+    <template #closeicon>
+      <i class="material-icons absolute">close</i>
+    </template>
+    <LoginComponent />
   </Dialog>
-  <Dialog v-model:visible="registerModal" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeRegisterModal" :style="{ maxWidth: '50rem' }">
-      <RegistrationComponent />
+  <Dialog :class="{'p-dialog-maximized': isMobile}" v-model:visible="registerModal" modal del:visible="visible" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" class="w-full" @hide="closeRegisterModal" :style="{ maxWidth: '50rem' }">
+    <template #header>
+      <div class="w-full flex justify-center items-center gap-2">
+        <div class="text-2xl font-normal">
+          <h1>Register for a Buck<span class="font-black">IT</span> account</h1>
+        </div>
+      </div>
+    </template>
+    <template #closeicon>
+      <i class="material-icons absolute">close</i>
+    </template>  
+    <RegistrationComponent />
   </Dialog>
   <Toast group="authError" class="!w-80" :duration="5000">
       <template #message="slotProps">
@@ -182,4 +194,8 @@ watch(
 
 <style lang="scss">
 @use "./assets/styles/styles.scss";
+
+.p-dialog-header {
+  padding: 10px !important;
+}
 </style>

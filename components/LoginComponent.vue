@@ -45,7 +45,6 @@ export default defineComponent({
             this.store.setUser(response.data.user)
             this.store.changeAuthenticated(true)
             if(this.$route.query.redirect) {
-              console.log('here')
                 this.$router.push({path: this.$route.query.redirect as string, query: {}}).then(() => {
                     reloadNuxtApp()
                 })
@@ -56,11 +55,13 @@ export default defineComponent({
                 reloadNuxtApp()
             })
         }
-    }
+    },
   },
   computed: {
-    isModal() {
-      return this.$route.query.login === 'true'
+    replaceUrl() {
+      const query = Object.assign({}, this.$route.query);
+      delete query.login;
+      return { query: {register: 'true', ...query} };
     }
   }
 })
@@ -69,10 +70,7 @@ export default defineComponent({
 <template>
     <div class="main bg-green">
         <form class="form flex flex-col gap-3" ref="loginForm" @submit.prevent="login">
-            <div class="text-3xl font-semibold">
-                <h1>Login to your Buck<span class="font-black">IT</span> account</h1>
-            </div>
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-1">
               <div class="flex-column">
                 <label>Email</label>
               </div>
@@ -85,7 +83,7 @@ export default defineComponent({
               </InputGroup>
             </div>
 
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-1">
               <div class="flex-column">
                 <label>Password </label>
               </div>
@@ -110,7 +108,7 @@ export default defineComponent({
             </div>
             <p class="flex justify-center items-center">
                 Don't have an account? 
-                <Button variant="text" as="router-link" class="hover:!bg-transparent hover:underline" :to="isModal ? {query: {register: 'true', redirect: route.query.redirect}} : '/register'">Sign up</Button>
+                <Button variant="text" as="router-link" class="hover:!bg-transparent hover:underline" :to="replaceUrl">Sign up</Button>
             </p>
 
             <div class="separator p-5">

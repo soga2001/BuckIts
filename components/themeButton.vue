@@ -18,6 +18,6 @@ export default defineComponent({
 
 <template >
     <ClientOnly>
-        <Button @click="toggleDarkMode" rounded variant="outlined" class="material-icons !p-1">{{store.getTheme ? 'dark_mode' : 'light_mode'}}</Button>
+        <Button @click="toggleDarkMode" rounded variant="outlined" class="btn-secondary material-icons !p-1">{{store.getTheme ? 'dark_mode' : 'light_mode'}}</Button>
     </ClientOnly>
 </template>

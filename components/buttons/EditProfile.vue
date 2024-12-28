@@ -123,8 +123,8 @@ export default defineComponent({
 
 <template>
     <div class="card flex justify-center">
-        <Button variant="outlined"  @click="visible=true" label="Edit Profile" icon="pi pi-user-edit" />
-        <Dialog v-model:visible="visible"  modal header="Edit Profile" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <Button variant="outlined"  @click="visible=true" label="Edit Profile" icon-class="!text-xl" icon="pi pi-user-edit" />
+        <Dialog :class="{'p-dialog-maximized': $device.isMobile}" v-model:visible="visible"  modal header="Edit Profile" pt:root:class="!border-0" pt:mask:class="backdrop-blur-sm" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
             <div class="flex flex-col gap-2">
                 <UploadAvatar />
                 <div class="flex flex-col gap-1">
