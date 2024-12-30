@@ -99,21 +99,6 @@ export type Database = {
         }
         Relationships: []
       }
-      sessions: {
-        Row: {
-          id: string
-          user_id: string
-        }
-        Insert: {
-          id: string
-          user_id: string
-        }
-        Update: {
-          id?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
@@ -129,7 +114,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: {
           id: string
-          user_id: string
+          created_at: string
+          updated_at: string
+          refreshed_at: string
+          user_agent: string
           ip: unknown
         }[]
       }

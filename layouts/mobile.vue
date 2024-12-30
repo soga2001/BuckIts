@@ -1,37 +1,17 @@
-<script lang="ts">
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-export default defineComponent({
-    name: 'MobileLayout',
-    data() {
-        return {
-            
-        }
-    },
-    setup() {
-        const store = useStore()
-        const {isMobile} = useDevice()
-        const route = useRoute()
-        return {store, isMobile, route}
-    },
-    computed: {
-        path() {
-            return this.route.path;
-        },
-        items() {
-            return [
-                { route: `/`, label: 'Buckits', icon: 'home', requiredAuthentication: true },
-                { route: `/@${this.store.getUser.user_metadata?.username}`, label: 'Media', icon: 'person',  requiredAuthentication: true  },
-                {route: `/login`, label: 'Login', icon: 'login', requiredAuthentication: false},
-                {route: `/register`, label: 'Register', icon: 'register', requiredAuthentication: false},
-            ]
-        }
-    }
-})
+const store = useStore()
+const route = useRoute()
+
+const toolbar = ref<HTMLElement | null>(null)
+const bottomNav = ref<HTMLElement | null>(null)
 </script>
 
 <template>
     <div class="flex flex-col !h-dvh w-full max-w-dvw overflow-y-hidden">
-        <Toolbar class="fixed w-full top-0 !p-2 bg !rounded-none !border-none z-10">
+        <Toolbar ref="toolbar" class="fixed w-full top-0 !p-2 !rounded-none !border-none z-10">
             <template #start>
                 <div class="flex items-center gap-2">
                     <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" style="width: 32px; height: 32px" />
@@ -49,7 +29,7 @@ export default defineComponent({
                 </div>
             </template>
         </Toolbar>
-        <div class="text-wrap overflow-y-auto" :style="{marginBottom: '56px', marginTop: '56px'}">
+        <div class="text-wrap px-2 overflow-y-auto" :style="{marginBottom: '45px', marginTop: '45px'}">
             <slot />
         </div>
         <div ref="bottomNav" class="bottom-nav flex flex-row tabs w-full bg fixed bottom-0 border-none shadow-2xl border-t border-surface-200 dark:border-surface-800 z-10">

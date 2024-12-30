@@ -9,12 +9,12 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="w-full grid min-[800px]:grid-cols-[minmax(500px,_1fr)_400px]">
+    <div class="w-full grid min-[800px]:grid-cols-[minmax(500px,900px)_300px]">
       <div class="border-none min-[800px]:border-r border-surface-100 dark:border-surface-700 w-full">
         <div v-for="i in 10" :key="i" class="p-4">
           <Card class="w-full">
               <template #header>
-                  <!-- <img alt="user header" src="/images/usercard.png" /> -->
+                <div class="w-full h-20 bg-slate-300"></div>
               </template>
               <template #title>Advanced Card</template>
               <template #subtitle>Card subtitle</template>

@@ -4,10 +4,11 @@ export default defineEventHandler(async (event) => {
     const client = await serverSupabaseClient(event)
 
     const {data: {user}, error} = await client.auth.getUser()
-    if (error) {
+
+    if (user == null) {
         return {
             error: error,
-            data: [],
+            data: null,
             count: null,
             status: 401,
             statusText: "Unathorized"

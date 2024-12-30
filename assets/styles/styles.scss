@@ -17,7 +17,8 @@
     --border-color-lighter: rgba(0,0,0);
 
     --text-color: rgba(0, 0, 0);
-    --text-color-secondary: rgb(42, 41, 41);
+    --text-color-secondary: rgb(42, 42, 42);
+    --text-color-tertiary: rgb(92, 92, 92);
 }
 
 :root[class="my-app-dark"] { 
@@ -35,7 +36,8 @@
     --border-color-lighter: rgba(255, 255, 255);
 
     --text-color: rgba(255, 255, 255);
-    --text-color-secondary: rgb(213, 214, 214);
+    --text-color-secondary: rgb(213, 213, 213);
+    --text-color-tertiary: rgb(163, 163, 163);
 }
 
 @media (width <= 1100px) {
@@ -55,6 +57,10 @@
 
 .text-secondary {
     color: var(--text-color-secondary) !important;
+}
+
+.text-tertiary {
+    color: var(--text-color-tertiary) !important;
 }
 
 .bg {

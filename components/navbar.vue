@@ -74,12 +74,18 @@ export default defineComponent({
                         <span class="max-[1100px]:hidden text-lg" >Home</span>
                     </NuxtLink>
                 </li>
-                <li v-if="store.isAuthenticated">
-                
+                <li>
                     <NuxtLink :to="`/@${store.user.user_metadata?.username}`" activeClass="active-link" v-ripple class="nav-link flex items-center cursor-pointer p-2 rounded transition-colors p-ripple">
                         <i class="default-icon material-icons-outlined mr-0 min-[1100px]:mr-2 !text-3xl">account_circle</i>
                         <i class="active-icon material-icons mr-0 min-[1100px]:mr-2 !text-3xl">account_circle</i>
                         <span class="max-[1100px]:hidden text-lg">Profile</span>
+                    </NuxtLink>
+                </li>
+                <li>
+                    <NuxtLink to="/settings" activeClass="active-link" v-ripple class="nav-link flex items-center cursor-pointer p-2 rounded transition-colors p-ripple">
+                        <i class="default-icon material-icons-outlined mr-0 min-[1100px]:mr-2 !text-3xl">settings</i>
+                        <i class="active-icon material-icons mr-0 min-[1100px]:mr-2 !text-3xl">settings</i>
+                        <span class="max-[1100px]:hidden text-lg">Settings</span>
                     </NuxtLink>
                 </li>
             </ul>

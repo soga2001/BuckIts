@@ -103,7 +103,7 @@ export default defineComponent({
         <div class="min-[1010px]:h-80 flex flex-col w-full">
             <div v-if="!loading && !error" class="py-5 min-[1010px]:px-10 min-[1200px]:px-20 min-[1010px]:py-5 flex flex-col min-[1010px]:flex-row justify-center max-[1010px]:items-center min-[1010px]:gap-20 h-full w-full">
                 <div class="">
-                    <Image v-if="userProfile.avatar_url != ''" :src="userProfile.avatar_url" image-class="rounded-full" class="w-48 h-48 rounded-full border bg-black overflow-hidden" preview/>
+                    <Image v-if="userProfile.avatar_url != ''" :src="userProfile.avatar_url" image-class="rounded-full" class="!w-48 !h-48 !rounded-full border bg-black overflow-hidden" preview/>
                     <Image v-else src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg" alt="Image" class="w-48 h-48 rounded-full border bg-black overflow-hidden" preview/>
                 </div>
                 <div class="flex flex-col max-[1010px]:items-center grow w-full gap-2">
